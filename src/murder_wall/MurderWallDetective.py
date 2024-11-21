@@ -18,3 +18,9 @@ class MurderWallDetective:
 
     def get_columns(self) -> List[str]:
         return [column for column in self.murder_wall[0][0].get_emg_frame().columns]
+
+    def get_activity_id(self, index: int) -> str:
+        return self.get_activity(index)[0].metadata.activity
+
+    def get_condition_id(self, index: int) -> str:
+        return self.get_activity(index)[0].metadata.condition
