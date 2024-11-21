@@ -1,5 +1,5 @@
 from pandas import DataFrame
-from typing import Tuple
+from typing import Tuple, Self
 from murder_wall.TrialData import TrialData
 
 
@@ -23,3 +23,11 @@ class MurderWallAsset:
 
     def get_force_path(self) -> str:
         return self.file_path[1]
+
+    def clip_emg_asset(self, clip_length) -> Self:
+        emg, force = self.data_frame
+        new_emg = emg.loc[0:clip_length, :]
+        return MurderWallAsset((new_emg, force), self.file_path, self.metadata)
+
+    def get_emg_frame_length(self) -> int:
+        return len(self.data_frame[0])
