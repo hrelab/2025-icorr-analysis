@@ -7,9 +7,8 @@ from typing import List
 from itertools import chain, cycle
 
 
-def plot_and_save(area_under_curve_data: pd.DataFrame, plot_title: str, store_at: str, x_label: str):
+def plot_and_save(area_under_curve_data: pd.DataFrame, plot_title: str, store_at: str, x_label: str, colors : List[str], labels : List[str], double_up : bool = False):
     test_df = area_under_curve_data.melt(var_name='type', value_name='value')
-    colors = ["red", "steelblue"]
     palette = dict(zip(area_under_curve_data.columns, cycle(colors)))
 
     plt.figure(figsize=(40, 15))
@@ -33,28 +32,25 @@ def plot_and_save(area_under_curve_data: pd.DataFrame, plot_title: str, store_at
         showfliers=False,
         linewidth=5,
     )
+    if double_up:
+        # Calculate positions for labels between every other column
+        tick_positions = np.arange(0.5, len(area_under_curve_data.columns), 2)  # Positions between boxes
+        tick_labels = [area_under_curve_data.columns[i][:2] for i in range(1, len(area_under_curve_data.columns), 2)]  # Labels
 
-    # Calculate positions for labels between every other column
-    tick_positions = np.arange(0.5, len(area_under_curve_data.columns), 2)  # Positions between boxes
-    tick_labels = [area_under_curve_data.columns[i][:2] for i in range(1, len(area_under_curve_data.columns), 2)]  # Labels
+        # Set custom x-ticks
+        ax.set_xticks(tick_positions)
+        ax.set_xticklabels(tick_labels, ha='center')
 
-    # Set custom x-ticks
-    ax.set_xticks(tick_positions)
-    ax.set_xticklabels(tick_labels, ha='center')
-
+    handles = [plt.Line2D([0], [0], color=colors[i], lw=4, label=labels[i]) for i in range(len(labels))]
     L = ax.legend(
-        handles=[
-            plt.Line2D([0], [0], color=colors[0], lw=4, label='Condition A'),
-            plt.Line2D([0], [0], color=colors[1], lw=4, label='Condition B')
-        ],
+        handles=handles,
         loc='upper right',
         ncol=1,
-        title='Condition',
         title_fontsize=30,
         fontsize=30
     )
 
-    plt.setp(L.texts, family='Open Sans', fontsize=30)
+    plt.setp(L.texts, fontsize=30)
     plt.title(plot_title)
     plt.ylabel("sEMG AUC", labelpad=30)
     plt.xlabel(x_label, labelpad=30)
