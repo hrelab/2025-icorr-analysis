@@ -41,7 +41,6 @@ def make_emg_area_under_curve_on_condition_two_AD_EX_4Act_plots(subject_data : M
     activities = ["x-axis", "y-axis", "z-axis", "z-torque"]
     for i, conditions in enumerate(subject_data.get_clipped_activity_pairs()):
         act = subject_data.get_activity_id(2 * i)
-        print(act)
         if act in ["01", "02", "03", "04"]:
             count += 1
             _, condition_2 = conditions
