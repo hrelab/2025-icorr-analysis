@@ -26,7 +26,7 @@ def make_emg_area_under_curve_on_different_activities_plots(subject_data):
 
 
 def make_emg_area_under_curve_on_different_conditions_plots(subject_data):
-    for i, conditions in enumerate(subject_data.get_activity_pairs()):
+    for i, conditions in enumerate(subject_data.get_clipped_activity_pairs()):
         condition_1, condition_2 = conditions
         area_under_curve_condition_1 = compute_area_under_curve_plot_for_activity(condition_1)
         area_under_curve_condition_2 = compute_area_under_curve_plot_for_activity(condition_2)
