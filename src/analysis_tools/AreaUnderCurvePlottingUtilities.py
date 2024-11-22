@@ -7,9 +7,10 @@ from typing import List
 from itertools import chain, cycle
 
 
-def plot_and_save(area_under_curve_data: pd.DataFrame, plot_title: str, store_at: str, x_label: str, colors : List[str], labels : List[str], double_up : bool = False):
+def plot_and_save(area_under_curve_data: pd.DataFrame, plot_title: str, store_at: str, x_label: str, colors : List[str], labels : List[str], position_mult : float, double_up : bool = False, clip : int = -1):
     test_df = area_under_curve_data.melt(var_name='type', value_name='value')
     palette = dict(zip(area_under_curve_data.columns, cycle(colors)))
+    positions = [i*position_mult for i in range(1, len(area_under_curve_data.columns)+1)]
 
     plt.figure(figsize=(40, 15))
 
@@ -31,23 +32,30 @@ def plot_and_save(area_under_curve_data: pd.DataFrame, plot_title: str, store_at
         width=0.6,
         showfliers=False,
         linewidth=5,
+        positions=positions
     )
+
+
     if double_up:
         # Calculate positions for labels between every other column
-        tick_positions = np.arange(0.5, len(area_under_curve_data.columns), 2)  # Positions between boxes
-        tick_labels = [area_under_curve_data.columns[i][:2] for i in range(1, len(area_under_curve_data.columns), 2)]  # Labels
-
+        tick_positions = positions * 0.5
+        if clip > 0:
+            tick_labels = [area_under_curve_data.columns[i][:clip] for i in range(1, len(area_under_curve_data.columns), 2)] # Labels
+        else:
+            tick_labels = [area_under_curve_data.columns[i] for i in range(1, len(area_under_curve_data.columns), 2)]
         # Set custom x-ticks
         ax.set_xticks(tick_positions)
         ax.set_xticklabels(tick_labels, ha='center')
 
     handles = [plt.Line2D([0], [0], color=colors[i], lw=4, label=labels[i]) for i in range(len(labels))]
+
     L = ax.legend(
         handles=handles,
-        loc='upper right',
+        loc='upper left',
         ncol=1,
         title_fontsize=30,
-        fontsize=30
+        fontsize=30,
+        facecolor='white',
     )
 
     plt.setp(L.texts, fontsize=30)
