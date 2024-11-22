@@ -1,0 +1,8 @@
+Metadata-Version: 2.1
+Name: icorr
+Version: 0.1.0
+Home-page: https://github.com/yourusername/icorr
+Author-email: your.email@example.com
+Requires-Dist: numpy
+Requires-Dist: matplotlib
+Requires-Dist: pandas

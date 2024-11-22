@@ -7,6 +7,8 @@ pythonpath = ["src"]
 
 [project]
 dependencies = ["numpy", "matplotlib", "pandas"]
+name = "icorr"
+dynamic = ["version"]
 
 [tool.mypy]
 python_version = "3.x"

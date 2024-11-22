@@ -31,8 +31,10 @@ def make_emg_area_under_curve_on_different_conditions_plots(subject_data):
         area_under_curve_condition_1 = compute_area_under_curve_plot_for_activity(condition_1)
         area_under_curve_condition_2 = compute_area_under_curve_plot_for_activity(condition_2)
         merged_data = merge_area_under_curve_plots(area_under_curve_condition_1, area_under_curve_condition_2)
+        print(merged_data)
         merged_data.to_csv(f"../test_data/plot_1/activity_{subject_data.get_activity_id(2 * i)}.csv")
-        plot_and_save(merged_data, f"Activity {subject_data.get_activity_id(2 * i)}", f"../test_data/plot_1/activity_{subject_data.get_activity_id(2 * i)}", "Muscles (Condition 1, Condition 2)")
+        # plot_and_save(merged_data, f"Activity {subject_data.get_activity_id(2 * i)}", f"../test_data/plot_1/activity_{subject_data.get_activity_id(2 * i)}", "Muscles (Condition 1, Condition 2)")
+        plot_and_save(merged_data, "", f"../test_data/plot_1/activity_{subject_data.get_activity_id(2 * i)}", "Muscles")
 
 
 def main():
