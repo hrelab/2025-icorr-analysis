@@ -26,11 +26,14 @@ class MurderWallDetective:
         return self.get_activity(index)[0].metadata.condition
 
     def _find_activity_emg_clip_value(self, activity: List[MurderWallAsset]) -> int:
+        """
+            Find the minimum game across all subjects of a given activity and return the length.
+        """
         return min([asset.get_emg_frame_length() for asset in activity])
 
     def get_clipped_activity_pairs(self) -> Tuple[List[MurderWallAsset], List[MurderWallAsset]]:
         min_value = 0xFFFFFFFF
-        for i in range(0, self.columns // 2, 2):
+        for i in range(0, self.columns, 2):
             activity_condition_1 = self.get_activity(i)
             activity_condition_2 = self.get_activity(i + 1)
             min_value = min(self._find_activity_emg_clip_value(activity_condition_1), self._find_activity_emg_clip_value(activity_condition_2))
@@ -39,7 +42,7 @@ class MurderWallDetective:
             yield (clipped_activity_condition_1, clipped_activity_condition_2)
 
     def get_activity_pairs(self) -> Tuple[List[MurderWallAsset], List[MurderWallAsset]]:
-        for i in range(0, self.columns // 2, 2):
+        for i in range(0, self.columns, 2):
             activity_condition_1 = self.get_activity(i)
             activity_condition_2 = self.get_activity(i + 1)
             yield (activity_condition_1, activity_condition_2)

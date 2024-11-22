@@ -25,8 +25,9 @@ class MurderWallAsset:
         return self.file_path[1]
 
     def clip_emg_asset(self, clip_length) -> Self:
+        assert clip_length > 0
         emg, force = self.data_frame
-        new_emg = emg.loc[0:clip_length, :]
+        new_emg = emg.iloc[0:clip_length, :]
         return MurderWallAsset((new_emg, force), self.file_path, self.metadata)
 
     def get_emg_frame_length(self) -> int:
