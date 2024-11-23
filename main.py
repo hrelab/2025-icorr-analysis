@@ -1,7 +1,7 @@
-from murder_wall.MurderWall import MurderWall
-from murder_wall.MurderWallDetective import MurderWallDetective
-from analysis_tools.PatientDataExtractor import get_subjects
-from analysis_tools.AreaUnderCurvePlottingUtilities import compute_area_under_curve_plot_for_activity, merge_area_under_curve_plots, plot_and_save
+from src.murder_wall.murderwall import MurderWall
+from src.murder_wall.murderwall_detective import MurderWallDetective
+from src.analysis_tools.patient_data_extractor import get_subjects
+from src.analysis_tools.area_under_curve_plotting_utilities import compute_area_under_curve_plot_for_activity, merge_area_under_curve_plots, plot_and_save
 import pandas as pd
 
 
@@ -12,7 +12,7 @@ def make_plot_for_certain_muscle(subject_data, condition_data, condition_id):
         plot_and_save(merged_data, f"Muscle {muscle} | Condition {condition_id}", f"../test_data/plot_2/{muscle}", "Activity")
 
 
-def make_emg_area_under_curve_on_different_activities_plots(subject_data):
+def make_emg_area_under_curve_on_different_activities_plots(subject_data: MurderWallDetective):
     condition_1_values = []
     condition_2_values = []
     for conditions in subject_data.get_clipped_activity_pairs():
@@ -25,7 +25,7 @@ def make_emg_area_under_curve_on_different_activities_plots(subject_data):
     make_plot_for_certain_muscle(subject_data, condition_2_values, "02")
 
 
-def make_emg_area_under_curve_on_different_conditions_plots(subject_data):
+def make_emg_area_under_curve_on_different_conditions_plots(subject_data: MurderWallDetective):
     for i, conditions in enumerate(subject_data.get_clipped_activity_pairs()):
         condition_1, condition_2 = conditions
         area_under_curve_condition_1 = compute_area_under_curve_plot_for_activity(condition_1)

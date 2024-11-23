@@ -1,6 +1,6 @@
 from pandas import DataFrame
 from typing import Tuple, Self
-from murder_wall.TrialData import TrialData
+from .trial_data import TrialData
 
 
 class MurderWallAsset:

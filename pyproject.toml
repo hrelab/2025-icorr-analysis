@@ -2,12 +2,40 @@
 requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"
 
-[tool.pytest.ini_options]
-pythonpath = ["src"]
+[tool.setuptools.packages.find]
+where = ["src/"]
+include = [
+    "murder_wall",
+    "analysis_tools",
+]
 
 [project]
-dependencies = ["numpy", "matplotlib", "pandas"]
+name = "icorr-data-analysis"
+version = "0.1.0"
+description = "Description of your project."
+authors = [
+    {name = "Gabriel Parra", email = "Gabriel.r.parra@gmail.com"}
+]
+requires-python = ">=3.12"
 
-[tool.mypy]
-python_version = "3.x"
-mypy_path = "src"
+dependencies = [
+    "numpy",
+    "matplotlib",
+    "pandas",
+    "pandas-stubs",
+    "mypy",
+    "pytest"
+]
+
+[tool.pytest.ini_options]
+pythonpath = "src"
+testpaths = [
+    "tests",
+]
+
+[[tool.mypy.overrides]]
+module = [
+    "murder_wall",
+    "analysis_tools"
+]
+

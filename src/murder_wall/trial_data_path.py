@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 from typing import List, Tuple
-from murder_wall.TrialData import TrialData
+from .trial_data import TrialData
 
 
 class TrialDataPath:

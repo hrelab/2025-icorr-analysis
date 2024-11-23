@@ -1,5 +1,7 @@
-from murder_wall.MurderWallAsset import MurderWallAsset
-from typing import List, Tuple
+from .murderwall_asset import MurderWallAsset
+from .types import Trial, trial_from_murderwall_asset
+from typing import List
+from itertools import chain
 
 
 class MurderWallDetective:
@@ -31,7 +33,10 @@ class MurderWallDetective:
         """
         return min([asset.get_emg_frame_length() for asset in activity])
 
-    def get_clipped_activity_pairs(self) -> Tuple[List[MurderWallAsset], List[MurderWallAsset]]:
+    def garbage_to_gold_morphism(self) -> List[Trial]:
+        return list(map(trial_from_murderwall_asset, chain.from_iterable(self.murder_wall)))
+
+    def get_clipped_activity_pairs(self):
         min_value = 0xFFFFFFFF
         for i in range(0, self.columns, 2):
             activity_condition_1 = self.get_activity(i)
@@ -41,7 +46,7 @@ class MurderWallDetective:
             clipped_activity_condition_2 = [asset.clip_emg_asset(min_value) for asset in activity_condition_2]
             yield (clipped_activity_condition_1, clipped_activity_condition_2)
 
-    def get_activity_pairs(self) -> Tuple[List[MurderWallAsset], List[MurderWallAsset]]:
+    def get_activity_pairs(self):
         for i in range(0, self.columns, 2):
             activity_condition_1 = self.get_activity(i)
             activity_condition_2 = self.get_activity(i + 1)

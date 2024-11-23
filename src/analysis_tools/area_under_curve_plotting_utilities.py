@@ -1,6 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from murder_wall.MurderWallAsset import MurderWallAsset
+from murder_wall.murderwall_asset import MurderWallAsset
 from typing import List
 from itertools import chain
 
