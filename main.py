@@ -57,6 +57,8 @@ def make_emg_area_under_curve_on_condition_two_AD_EX_4Act_plots(subject_data : M
         merged_data = pd.concat([merged_data, temp], axis=1)
     merged_data.to_csv(f"../test_data/plot_2/activity_01_02_03_04.csv")
     plot_and_save(merged_data, "", f"../test_data/plot_2/activity_01_02_03_04", "Goal Trajectory", colors, ["AD", "EX"], 0.5, True)
+    
+    
 
 def main():
     colors = ["lightcoral", "steelblue"]

@@ -1,0 +1,12 @@
+Metadata-Version: 2.1
+Name: icorr-data-analysis
+Version: 0.1.0
+Summary: Description of your project.
+Author-email: Gabriel Parra <Gabriel.r.parra@gmail.com>
+Requires-Python: >=3.12
+Requires-Dist: numpy
+Requires-Dist: matplotlib
+Requires-Dist: pandas
+Requires-Dist: pandas-stubs
+Requires-Dist: mypy
+Requires-Dist: pytest
