@@ -2,16 +2,24 @@
 
 Creates plots using the data collected for icorr-2025
 
-# Setting Up Environment
+## Setting Up Environment
 
-## Create virtual environent if one does not exist.
+Run the following commands based on the state of your project.
 
-python -m venv .venv
+### If you have pre-existing python virtual python environment
 
-## If virtual python environment exist or you just created it.
+Activate the environment :)
 
-source .venv/bin/activate
+### Otherwise
 
-## Using the pyproject.toml for project management.
+### Create virtual environent if one does not exist.
 
-python -m pip install -e .
+`python -m venv .venv`
+
+### Source the environment.
+
+`source .venv/bin/activate`
+
+### Using the pyproject.toml for project management.
+
+`python -m pip install -e .`
