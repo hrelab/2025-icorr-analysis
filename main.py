@@ -34,6 +34,30 @@ def make_emg_area_under_curve_on_different_conditions_plots(subject_data: Murder
         merged_data.to_csv(f"../test_data/plot_1/activity_{subject_data.get_activity_id(2 * i)}.csv")
         plot_and_save(merged_data, f"Activity {subject_data.get_activity_id(2 * i)}", f"../test_data/plot_1/activity_{subject_data.get_activity_id(2 * i)}", "Muscles (Condition 1, Condition 2)")
 
+def make_emg_area_under_curve_on_condition_two_AD_EX_4Act_plots(subject_data : MurderWallDetective, colors):
+    condition_2_values = []
+    count = 0
+    activities = ["x-axis", "y-axis", "z-axis", "z-torque"]
+    for i, conditions in enumerate(subject_data.get_clipped_activity_pairs()):
+        act = subject_data.get_activity_id(2 * i)
+        if act in ["01", "02", "03", "04"]:
+            count += 1
+            _, condition_2 = conditions
+            area_under_curve_condition_2 = compute_area_under_curve_plot_for_activity(condition_2)
+            condition_2_values.append(area_under_curve_condition_2)
+            if count == 4:
+                break
+    merged_data = pd.DataFrame()
+    # For each dataframe in condition_1_values, get the two columns called "AD_C01" and "EX_C01" and concat to a new dataframe
+    # Then plot this new dataframe
+    for i, frame in enumerate(condition_2_values):
+        temp = pd.concat([frame["AD_C02"], frame["EX_C02"]], axis=1)
+        temp.columns = [f"AD_{i}", activities[i]]
+        merged_data = pd.concat([merged_data, temp], axis=1)
+    merged_data.to_csv(f"../test_data/plot_2/activity_01_02_03_04.csv")
+    plot_and_save(merged_data, "", f"../test_data/plot_2/activity_01_02_03_04", "Goal Trajectory", colors, ["AD", "EX"], 0.5, True)
+
+
 
 def main():
     murder_wall: MurderWall = MurderWall(get_subjects("../proc_data"))
