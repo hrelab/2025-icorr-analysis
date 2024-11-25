@@ -1,5 +1,4 @@
 from .murderwall_asset import MurderWallAsset
-from .types import Trial, trial_from_murderwall_asset
 from typing import List
 from itertools import chain
 
