@@ -61,11 +61,10 @@ def make_emg_area_under_curve_on_condition_two_AD_EX_4Act_plots(subject_data : M
     
 
 def main():
-    colors = ["lightcoral", "steelblue"]
     murder_wall: MurderWall = MurderWall(get_subjects("../proc_data"))
     subject_data: MurderWallDetective = murder_wall.create_layout()
-    # make_emg_area_under_curve_on_different_conditions_plots(subject_data, colors)
-    make_emg_area_under_curve_on_condition_two_AD_EX_4Act_plots(subject_data, colors)
+    make_emg_area_under_curve_on_different_conditions_plots(subject_data, ["#984ea3", "#ff7f00"])
+    make_emg_area_under_curve_on_condition_two_AD_EX_4Act_plots(subject_data, ["#163e64", "#215f9a"])
 
 
 
