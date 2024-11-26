@@ -1,7 +1,7 @@
 from src.murder_wall.murderwall import MurderWall
 from src.murder_wall.murderwall_detective import MurderWallDetective
 from src.analysis_tools.patient_data_extractor import get_subjects
-from src.analysis_tools.area_under_curve_plotting_utilities import compute_area_under_curve_plot_for_activity, merge_area_under_curve_plots, plot_and_save
+from src.analysis_tools.area_under_curve_plotting_utilities import compute_area_under_curve_plot_for_activity, merge_area_under_curve_plots, plot_and_save, plot_no_save
 import pandas as pd
 
 
@@ -25,14 +25,14 @@ def make_emg_area_under_curve_on_different_activities_plots(subject_data: Murder
     make_plot_for_certain_muscle(subject_data, condition_2_values, "02")
 
 
-def make_emg_area_under_curve_on_different_conditions_plots(subject_data: MurderWallDetective):
+def make_emg_area_under_curve_on_different_conditions_plots(subject_data: MurderWallDetective, colors):
     for i, conditions in enumerate(subject_data.get_clipped_activity_pairs()):
         condition_1, condition_2 = conditions
         area_under_curve_condition_1 = compute_area_under_curve_plot_for_activity(condition_1)
         area_under_curve_condition_2 = compute_area_under_curve_plot_for_activity(condition_2)
         merged_data = merge_area_under_curve_plots(area_under_curve_condition_1, area_under_curve_condition_2)
         merged_data.to_csv(f"../test_data/plot_1/activity_{subject_data.get_activity_id(2 * i)}.csv")
-        plot_and_save(merged_data, f"Activity {subject_data.get_activity_id(2 * i)}", f"../test_data/plot_1/activity_{subject_data.get_activity_id(2 * i)}", "Muscles (Condition 1, Condition 2)")
+        plot_no_save(merged_data, f"Activity {subject_data.get_activity_id(2 * i)}", f"../test_data/plot_1/activity_{subject_data.get_activity_id(2 * i)}", "Muscles (Condition 1, Condition 2)", colors=colors, labels=["Condition 1", "Condition 2"], clip=2, double_up=True)
 
 def make_emg_area_under_curve_on_condition_two_AD_EX_4Act_plots(subject_data : MurderWallDetective, colors):
     condition_2_values = []
@@ -55,7 +55,7 @@ def make_emg_area_under_curve_on_condition_two_AD_EX_4Act_plots(subject_data : M
         temp.columns = [f"AD_{i}", activities[i]]
         merged_data = pd.concat([merged_data, temp], axis=1)
     merged_data.to_csv(f"../test_data/plot_2/activity_01_02_03_04.csv")
-    plot_and_save(merged_data, "", f"../test_data/plot_2/activity_01_02_03_04", "Goal Trajectory", colors, ["AD", "EX"], 0.5, True)
+    plot_no_save(merged_data, "", f"../test_data/plot_2/activity_01_02_03_04", "Goal Trajectory", colors, ["AD", "EX"], 0.5, True)
 
 
 
