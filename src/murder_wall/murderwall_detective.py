@@ -1,6 +1,5 @@
 from .murderwall_asset import MurderWallAsset
 from typing import List
-from itertools import chain
 
 
 class MurderWallDetective:
@@ -13,7 +12,7 @@ class MurderWallDetective:
         assert (self.columns > index)
         return [row[index] for row in self.murder_wall]
 
-    def get_subject(self, index) -> List[MurderWallAsset]:
+    def get_subject(self, index: int) -> List[MurderWallAsset]:
         assert (self.rows > index)
         return self.murder_wall[index]
 
@@ -31,9 +30,6 @@ class MurderWallDetective:
             Find the minimum game across all subjects of a given activity and return the length.
         """
         return min([asset.get_emg_frame_length() for asset in activity])
-
-    def garbage_to_gold_morphism(self) -> List[Trial]:
-        return list(map(trial_from_murderwall_asset, chain.from_iterable(self.murder_wall)))
 
     def get_clipped_activity_pairs(self):
         min_value = 0xFFFFFFFF

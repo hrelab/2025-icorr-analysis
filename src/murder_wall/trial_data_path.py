@@ -1,7 +1,8 @@
 import os
 import pandas as pd
-from typing import List, Tuple
+from typing import List
 from .trial_data import TrialData
+from .murderwall_asset import PathData, FrameData
 
 
 class TrialDataPath:
@@ -24,12 +25,12 @@ class TrialDataPath:
         self._assert_existence_of_new_data(emg_path, force_path)
         return (emg_path, force_path)
 
-    def get_path(self) -> Tuple[str, str]:
+    def get_path(self) -> PathData:
         emg, force = self._get()
-        return (emg, force)
+        return PathData(emg, force)
 
-    def get_data_frame(self) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    def get_data_frame(self) -> FrameData:
         emg, force = self._get()
         print(f"Converting {emg} to dataframe")
         print(f"Converting {force} to dataframe")
-        return (pd.read_csv(emg, index_col=0), pd.read_csv(force, index_col=0))
+        return FrameData(pd.read_csv(emg, index_col=0), pd.read_csv(force, index_col=0))
