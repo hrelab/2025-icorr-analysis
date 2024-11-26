@@ -2,14 +2,13 @@ from .murderwall_asset import MurderWallAsset
 from .murderwall_detective import MurderWallDetective
 from .trial_data_path import TrialDataPath
 from .trial_data import TrialData
-from .types import ExperimentParameters
 from itertools import chain
 from typing import List
 
 
 class MurderWall:
-    def __init__(self, experiment_parameters: ExperimentParameters):
-        self.experiment_parameters: ExperimentParameters = experiment_parameters
+    def __init__(self, experiment_parameters):
+        self.experiment_parameters = experiment_parameters
 
     def _create_condition_column(self, activity_data: TrialData) -> MurderWallAsset:
         data_path = TrialDataPath("../proc_data", self.experiment_parameters.data_types, activity_data)

@@ -1,5 +1,4 @@
 from .murderwall_asset import MurderWallAsset
-from .types import Trial, trial_from_murderwall_asset
 from typing import List
 from itertools import chain
 
@@ -33,7 +32,7 @@ class MurderWallDetective:
         """
         return min([asset.get_emg_frame_length() for asset in activity])
 
-    def garbage_to_gold_morphism(self) -> List[Trial]:
+    def garbage_to_gold_morphism(self):
         return list(map(trial_from_murderwall_asset, chain.from_iterable(self.murder_wall)))
 
     def get_clipped_activity_pairs(self):
