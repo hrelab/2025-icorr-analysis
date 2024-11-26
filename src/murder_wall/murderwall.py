@@ -17,7 +17,7 @@ class MurderWall:
         return MurderWallAsset(data_path.get_data_frame(), data_path.get_path(), activity_data)
 
     def _create_activity_column(self, subject_id: str, activity_id: str) -> List[MurderWallAsset]:
-        activity_data = [TrialData(Subject.from_id(subject_id), condition_id, activity_id) for condition_id in self.experiment_parameters.conditions]  # replace subject id with subject from subject module
+        activity_data = [TrialData(Subject.from_id(subject_id), condition_id, activity_id) for condition_id in self.experiment_parameters.conditions]
         return [self._create_condition_column(data) for data in activity_data]
 
     def _create_subject_row(self, subject_id: str) -> List[MurderWallAsset]:

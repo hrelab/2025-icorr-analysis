@@ -1,5 +1,5 @@
 from .murderwall_asset import MurderWallAsset
-from typing import List
+from typing import List, Tuple
 
 
 class MurderWallDetective:
@@ -31,8 +31,7 @@ class MurderWallDetective:
         """
         return min([asset.get_emg_frame_length() for asset in activity])
 
-    def get_clipped_activity_pairs(self):
-        min_value = 0xFFFFFFFF
+    def get_clipped_activity_pairs(self) -> Tuple[List[MurderWallAsset], List[MurderWallAsset]]:
         for i in range(0, self.columns, 2):
             activity_condition_1 = self.get_activity(i)
             activity_condition_2 = self.get_activity(i + 1)
