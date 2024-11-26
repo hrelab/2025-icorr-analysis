@@ -14,7 +14,8 @@ name = "icorr-data-analysis"
 version = "0.1.0"
 description = "Description of your project."
 authors = [
-    {name = "Gabriel Parra", email = "Gabriel.r.parra@gmail.com"}
+    {name = "Gabriel Parra", email = "u1289824@utah.edu"},
+    {name = "Jonathan Jenkens", email = "jono.jenkens@utah.edu"}
 ]
 requires-python = ">=3.12"
 
