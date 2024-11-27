@@ -3,10 +3,9 @@ from src.murder_wall.murderwall_detective import MurderWallDetective
 from src.analysis_tools.patient_data_extractor import get_subjects
 from src.analysis_tools.area_under_curve_plotting_utilities import (
     compute_area_under_curve_plot_for_activity,
-    merge_area_under_curve_plots,
     plot_no_save,
     break_into_seperate_conditions,
-    merge_condition_plots,
+    merge_data_frames,
     compute_area_under_curve_plot_for_attribute,
     ActivityUnderConditions,
     LabelsPerColumn
@@ -21,7 +20,7 @@ def make_emg_area_under_curve_on_different_attributes_plots(subject_data: Murder
         right_handed_auc = compute_area_under_curve_plot_for_attribute(attributes_under_condition.right_handed)
         left_handed_auc = compute_area_under_curve_plot_for_attribute(attributes_under_condition.left_handed)
         impaired_auc = compute_area_under_curve_plot_for_attribute(attributes_under_condition.impaired)
-        merged_data = merge_condition_plots(right_handed_auc, left_handed_auc, impaired_auc)
+        merged_data = merge_data_frames(WorkingData([right_handed_auc, left_handed_auc, impaired_auc]))
         plot_no_save(
             merged_data,
             f"Activity {subject_data.get_activity_id(2 * activity_index)} | Condition  {condition}",
@@ -59,7 +58,7 @@ def make_emg_area_under_curve_on_different_conditions_plots(subject_data: Murder
         condition_1, condition_2 = conditions
         area_under_curve_condition_1 = compute_area_under_curve_plot_for_activity(condition_1)
         area_under_curve_condition_2 = compute_area_under_curve_plot_for_activity(condition_2)
-        merged_data = merge_area_under_curve_plots(area_under_curve_condition_1, area_under_curve_condition_2)
+        merged_data = merge_data_frames(WorkingData([area_under_curve_condition_1, area_under_curve_condition_2]))
         plot_no_save(
             merged_data,
             f"Activity {subject_data.get_activity_id(2 * i)}",

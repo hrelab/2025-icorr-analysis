@@ -10,18 +10,11 @@ from gstd.WorkingData import WorkingData
 from enum import Enum
 
 
-def plot_and_save(area_under_curve_data: pd.DataFrame, plot_title: str, store_at: str, x_label: str):
-    font = {'size': 20}
-    plt.rc('font', **font)
-    plt.figure(figsize=(40, 15))
-    area_under_curve_data.boxplot(showfliers=False)
-    plt.title(plot_title)
-    plt.ylabel("Area Under Curve", labelpad=30)
-    plt.xlabel(x_label, labelpad=30)
-    plt.savefig(f"{store_at}.eps")
-    plt.savefig(f"{store_at}.png")
-    area_under_curve_data.to_csv(f"{store_at}.csv")
-    plt.close()
+@dataclass
+class ActivityUnderConditions:
+    right_handed: List[MurderWallAsset]
+    left_handed: List[MurderWallAsset]
+    impaired: List[MurderWallAsset]
 
 
 class LabelsPerColumn(Enum):
@@ -109,22 +102,6 @@ def compute_area_under_curve_plot_for_activity(activity: List[MurderWallAsset]) 
     return area_under_curve_data_frame
 
 
-def merge_area_under_curve_plots(auc_condition_1: pd.DataFrame, auc_condition_2: pd.DataFrame) -> pd.DataFrame:  # auc = area under curve
-    columns_condition_1 = auc_condition_1.columns.tolist()
-    columns_condition_2 = auc_condition_2.columns.tolist()
-    merged_columns = list(chain.from_iterable(zip(columns_condition_1, columns_condition_2)))
-    merged_tables = pd.concat([auc_condition_1, auc_condition_2], axis=1)
-    merged_tables = merged_tables[merged_columns]
-    return merged_tables
-
-
-@dataclass
-class ActivityUnderConditions:
-    right_handed: List[MurderWallAsset]
-    left_handed: List[MurderWallAsset]
-    impaired: List[MurderWallAsset]
-
-
 def break_into_seperate_conditions(activity: List[MurderWallAsset]) -> ActivityUnderConditions:
     activity = WorkingData(activity)
     left_handed = (
@@ -160,11 +137,13 @@ def compute_area_under_curve_plot_for_attribute(activity: List[MurderWallAsset])
     return area_under_curve_data_frame
 
 
-def merge_condition_plots(right_handed: pd.DataFrame, left_handed: pd.DataFrame, impaired: pd.DataFrame) -> pd.DataFrame:  # auc = area under curve
-    columns_right_handed = right_handed.columns.tolist()
-    columns_left_handed = left_handed.columns.tolist()
-    columns_impaired = impaired.columns.tolist()
-    merged_columns = list(chain.from_iterable(zip(columns_right_handed, columns_left_handed, columns_impaired)))
-    merged_tables = pd.concat([right_handed, left_handed, impaired], axis=1)
+def merge_data_frames(data_frames: WorkingData[pd.DataFrame]) -> pd.DataFrame:  # auc = area under curve
+    columns = (
+        data_frames
+        .map(lambda frame: frame.columns.tolist())
+        .to_list()
+    )
+    merged_columns = list(chain.from_iterable(zip(*columns)))
+    merged_tables = pd.concat([frame for frame in data_frames.to_list()], axis=1)
     merged_tables = merged_tables[merged_columns]
     return merged_tables
