@@ -1,10 +1,43 @@
 from src.murder_wall.murderwall import MurderWall
 from src.murder_wall.murderwall_detective import MurderWallDetective
 from src.analysis_tools.patient_data_extractor import get_subjects
-from src.analysis_tools.area_under_curve_plotting_utilities import compute_area_under_curve_plot_for_activity, merge_area_under_curve_plots, plot_no_save
+from src.analysis_tools.area_under_curve_plotting_utilities import (
+    compute_area_under_curve_plot_for_activity,
+    merge_area_under_curve_plots,
+    plot_no_save,
+    break_into_seperate_conditions,
+    merge_condition_plots,
+    compute_area_under_curve_plot_for_attribute,
+    ActivityUnderConditions,
+    LabelsPerColumn
+)
 from src.murder_wall.experiment_parameters import ExperimentParameters
 from src.gstd.WorkingData import WorkingData
 import pandas as pd
+
+
+def make_emg_area_under_curve_on_different_attributes_plots(subject_data: MurderWallDetective):
+    def handle_atrributes_under_condition(attributes_under_condition: ActivityUnderConditions, subject_data: MurderWallDetective, activity_index: int, condition: str):
+        right_handed_auc = compute_area_under_curve_plot_for_attribute(attributes_under_condition.right_handed)
+        left_handed_auc = compute_area_under_curve_plot_for_attribute(attributes_under_condition.left_handed)
+        impaired_auc = compute_area_under_curve_plot_for_attribute(attributes_under_condition.impaired)
+        merged_data = merge_condition_plots(right_handed_auc, left_handed_auc, impaired_auc)
+        plot_no_save(
+            merged_data,
+            f"Activity {subject_data.get_activity_id(2 * activity_index)} | Condition  {condition}",
+            f"../test_data/plot_3/activity_{subject_data.get_activity_id(2 * activity_index)}_condition_{condition}",
+            "Muscle",
+            ["#984ea3", "#ff7f00", "#ff7ea3"],
+            ["Right Handed", "Left Handed", "Impaired"],
+            LabelsPerColumn.TRIPLEUP,
+            2
+        )
+    for i, conditions in enumerate(subject_data.get_clipped_activity_pairs()):
+        condition_1, condition_2 = conditions
+        attributes_condition_1 = break_into_seperate_conditions(condition_1)
+        attributes_condition_2 = break_into_seperate_conditions(condition_2)
+        handle_atrributes_under_condition(attributes_condition_1, subject_data, i, "01")
+        handle_atrributes_under_condition(attributes_condition_2, subject_data, i, "02")
 
 
 def make_emg_area_under_curve_on_different_activities_plots(subject_data: MurderWallDetective):
@@ -34,7 +67,7 @@ def make_emg_area_under_curve_on_different_conditions_plots(subject_data: Murder
             "Muscle (Condition 1, Condition 2)",
             ["#984ea3", "#ff7f00"],
             ["Condition 1", "Condition 2"],
-            True,
+            LabelsPerColumn.DOUBLEUP,
             2
         )
 
@@ -50,6 +83,7 @@ def main():
     subject_data: MurderWallDetective = murder_wall.create_layout()
     make_emg_area_under_curve_on_different_conditions_plots(subject_data)
     make_emg_area_under_curve_on_different_activities_plots(subject_data)
+    make_emg_area_under_curve_on_different_attributes_plots(subject_data)
 
 
 if __name__ == "__main__":
