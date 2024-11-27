@@ -1,12 +1,12 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from murder_wall.murderwall_asset import MurderWallAsset
-from typing import List
+from typing import List, Callable
 from itertools import chain, cycle
 import numpy as np
 import seaborn as sns
 from dataclasses import dataclass
-from gstd.WorkingData import WorkingData
+from gstd.working_data import WorkingData
 from enum import Enum
 
 
@@ -18,9 +18,10 @@ class ActivityUnderConditions:
 
 
 class LabelsPerColumn(Enum):
-    SINGLEUP = 0
-    DOUBLEUP = 1
-    TRIPLEUP = 2
+    SINGLEUP = 1
+    DOUBLEUP = 2
+    TRIPLEUP = 3
+    QUATROUP = 4
 
 
 def plot_no_save(area_under_curve_data: pd.DataFrame, plot_title: str, store_at: str, x_label: str, colors: List[str], labels: List[str], labels_per_column: LabelsPerColumn = LabelsPerColumn.SINGLEUP, clip: int = -1):
@@ -50,20 +51,13 @@ def plot_no_save(area_under_curve_data: pd.DataFrame, plot_title: str, store_at:
         linewidth=5,
     )
 
-    jump_rate = 1
-    match labels_per_column:
-        case LabelsPerColumn.DOUBLEUP:
-            jump_rate = 2
-        case LabelsPerColumn.TRIPLEUP:
-            jump_rate = 3
-
     # we should rename clip here, it makes sense but has already been assigned to shortening the length of a frame relative to another frame.
     if labels_per_column != LabelsPerColumn.SINGLEUP:
-        tick_positions = np.arange(0.5, len(area_under_curve_data.columns), jump_rate)
+        tick_positions = np.arange(0.5, len(area_under_curve_data.columns), labels_per_column.value)
         if clip > 0:
-            tick_labels = [area_under_curve_data.columns[i][:clip] for i in range(1, len(area_under_curve_data.columns), jump_rate)]
+            tick_labels = [area_under_curve_data.columns[i][:clip] for i in range(1, len(area_under_curve_data.columns), labels_per_column.value)]
         else:
-            tick_labels = [area_under_curve_data.columns[i] for i in range(1, len(area_under_curve_data.columns), jump_rate)]
+            tick_labels = [area_under_curve_data.columns[i] for i in range(1, len(area_under_curve_data.columns), labels_per_column.value)]
         ax.set_xticks(tick_positions)
         ax.set_xticklabels(tick_labels, ha='center')
 
@@ -87,43 +81,28 @@ def plot_no_save(area_under_curve_data: pd.DataFrame, plot_title: str, store_at:
     plt.close()
 
 
-def compute_area_under_curve_plot_for_activity(activity: List[MurderWallAsset]) -> pd.DataFrame:
-    condition_id = activity[0].metadata.condition
-    columns = activity[0].get_emg_frame().columns.tolist()[3:]
-    area_under_curve_data_frame = pd.DataFrame(columns=columns)
-    for subject_doing_activity in activity:
-        subject_emg_activity = subject_doing_activity.get_emg_frame().iloc[:, 3:]
-        area_under_curve = subject_emg_activity.cumsum()
-        assert len(area_under_curve) >= 1, "sEMG curve cannot have zero area accumulation"
-        area_under_curve_data_frame.loc[len(area_under_curve_data_frame)] = area_under_curve.iloc[-1] / len(subject_emg_activity)
-    columns_with_condition = [f"{column}_C{condition_id}" for column in columns]
-    rename_map = dict(zip(columns, columns_with_condition))
-    area_under_curve_data_frame = area_under_curve_data_frame.rename(columns=rename_map)
-    return area_under_curve_data_frame
-
-
 def break_into_seperate_conditions(activity: List[MurderWallAsset]) -> ActivityUnderConditions:
-    activity = WorkingData(activity)
+    activity_wrapped = WorkingData(activity)
     left_handed = (
-        activity
+        activity_wrapped
         .filter(lambda asset: asset.metadata.subject.handedness == "Left" and not asset.metadata.subject.impaired)
         .to_list()
     )
     right_handed = (
-        activity
+        activity_wrapped
         .filter(lambda asset: asset.metadata.subject.handedness == "Right" and not asset.metadata.subject.impaired)
         .to_list()
     )
     impaired = (
-        activity
+        activity_wrapped
         .filter(lambda asset: asset.metadata.subject.impaired)
         .to_list()
     )
     return ActivityUnderConditions(right_handed, left_handed, impaired)
 
 
-def compute_area_under_curve_plot_for_attribute(activity: List[MurderWallAsset]) -> pd.DataFrame:
-    attribute = "I" if activity[0].metadata.subject.impaired else activity[0].metadata.subject.handedness[0]
+def compute_area_under_curve(activity: List[MurderWallAsset], label_format: Callable[[MurderWallAsset], str]) -> pd.DataFrame:
+    label = label_format(activity[0])
     columns = activity[0].get_emg_frame().columns.tolist()[3:]
     area_under_curve_data_frame = pd.DataFrame(columns=columns)
     for subject_doing_activity in activity:
@@ -131,7 +110,7 @@ def compute_area_under_curve_plot_for_attribute(activity: List[MurderWallAsset])
         area_under_curve = subject_emg_activity.cumsum()
         assert len(area_under_curve) >= 1, "sEMG curve cannot have zero area accumulation"
         area_under_curve_data_frame.loc[len(area_under_curve_data_frame)] = area_under_curve.iloc[-1] / len(subject_emg_activity)
-    columns_with_condition = [f"{column}_A{attribute}" for column in columns]
+    columns_with_condition = [f"{column}_{label}" for column in columns]
     rename_map = dict(zip(columns, columns_with_condition))
     area_under_curve_data_frame = area_under_curve_data_frame.rename(columns=rename_map)
     return area_under_curve_data_frame

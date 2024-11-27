@@ -1,6 +1,6 @@
 from __future__ import annotations
 from dataclasses import dataclass
-from typing import Generic, Callable, Iterator, TypeVar, Tuple, List
+from typing import Generic, Callable, TypeVar, Tuple, List, Iterable
 from functools import reduce
 from itertools import islice
 
@@ -18,7 +18,7 @@ class WorkingData(Generic[T]):
         More features will be added when I need them.
         - Gabe :)
     """
-    data: Iterator[T]
+    data: Iterable[T]
 
     def __iter__(self):
         return self.data
@@ -37,9 +37,6 @@ class WorkingData(Generic[T]):
 
     def slice(self, start: int, stop: int) -> WorkingData[T]:
         return WorkingData(islice(self.data, start, stop))
-
-    def next(self) -> T:
-        return next(self.data)
 
     def unzip(self) -> Tuple[WorkingData[U], WorkingData[V]]:
         data_1, data_2 = zip(*self.data)
