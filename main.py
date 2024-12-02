@@ -17,21 +17,25 @@ import pandas as pd
 
 def make_emg_area_under_curve_on_different_attributes_plots(subject_data: MurderWallDetective):
     def create_label(trial: MurderWallAsset) -> str:
-        return "AI" if trial.metadata.subject.impaired else f"A{trial.metadata.subject.handedness[0]}"
+        if trial.metadata.subject.impaired:
+            return "ARI" if trial.metadata.subject.handedness == "Right" else "ALI"
+        else:
+            return f"A{trial.metadata.subject.handedness[0]}"
 
     def handle_atrributes_under_condition(attributes_under_condition: ActivityUnderConditions, subject_data: MurderWallDetective, activity_index: int, condition: str):
         right_handed_auc = compute_area_under_curve(attributes_under_condition.right_handed, create_label)
         left_handed_auc = compute_area_under_curve(attributes_under_condition.left_handed, create_label)
-        impaired_auc = compute_area_under_curve(attributes_under_condition.impaired, create_label)
-        merged_data = merge_data_frames(WorkingData([right_handed_auc, left_handed_auc, impaired_auc]))
+        impaired_left_handed_auc = compute_area_under_curve(attributes_under_condition.impaired_left_handed, create_label)
+        impaired_right_handed_auc = compute_area_under_curve(attributes_under_condition.impaired_right_handed, create_label)
+        merged_data = merge_data_frames(WorkingData([right_handed_auc, left_handed_auc, impaired_left_handed_auc, impaired_right_handed_auc]))
         plot_no_save(
             merged_data,
             f"Activity {subject_data.get_activity_id(2 * activity_index)} | Condition  {condition}",
             f"../test_data/plot_3/activity_{subject_data.get_activity_id(2 * activity_index)}_condition_{condition}",
             "Muscle",
-            ["#293F14", "#729E1A", "#68121B"],
-            ["Right Handed", "Left Handed", "Impaired"],
-            LabelsPerColumn.TRIPLEUP,
+            ["#293F14", "#729E1A", "#68121B", "#68121B"],
+            ["Right Handed", "Left Handed", "Impaired Left Handed", "Impaired Right Handed"],
+            LabelsPerColumn.QUATROUP,
             2
         )
 

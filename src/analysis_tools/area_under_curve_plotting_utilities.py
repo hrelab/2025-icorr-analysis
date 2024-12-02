@@ -14,7 +14,8 @@ from enum import Enum
 class ActivityUnderConditions:
     right_handed: List[MurderWallAsset]
     left_handed: List[MurderWallAsset]
-    impaired: List[MurderWallAsset]
+    impaired_left_handed: List[MurderWallAsset]
+    impaired_right_handed: List[MurderWallAsset]
 
 
 class LabelsPerColumn(Enum):
@@ -93,12 +94,17 @@ def break_into_seperate_conditions(activity: List[MurderWallAsset]) -> ActivityU
         .filter(lambda asset: asset.metadata.subject.handedness == "Right" and not asset.metadata.subject.impaired)
         .to_list()
     )
-    impaired = (
+    impaired_left_handed = (
         activity_wrapped
-        .filter(lambda asset: asset.metadata.subject.impaired)
+        .filter(lambda asset: asset.metadata.subject.impaired and asset.metadata.subject.handedness == "Left")
         .to_list()
     )
-    return ActivityUnderConditions(right_handed, left_handed, impaired)
+    impaired_right_handed = (
+        activity_wrapped
+        .filter(lambda asset: asset.metadata.subject.impaired and asset.metadata.subject.handedness == "Right")
+        .to_list()
+    )
+    return ActivityUnderConditions(right_handed, left_handed, impaired_left_handed, impaired_right_handed)
 
 
 def compute_area_under_curve(activity: List[MurderWallAsset], label_format: Callable[[MurderWallAsset], str]) -> pd.DataFrame:
