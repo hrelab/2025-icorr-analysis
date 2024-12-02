@@ -12,7 +12,7 @@ Activate the environment :)
 
 ### Otherwise
 
-### Create virtual environent if one does not exist.
+### Create virtual environent
 
 `python -m venv .venv`
 
