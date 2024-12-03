@@ -22,6 +22,20 @@ def make_emg_area_under_curve_on_different_attributes_plots(subject_data: Murder
         else:
             return f"A{trial.metadata.subject.handedness[0]}"
 
+    def create_title(activity_id: str, condition_id: str) -> str:
+        rename = {
+            "01": "x-axis",
+            "02": "y-axis",
+            "03": "z-axis",
+            "04": "torque",
+            "05": "circle (CW)",
+            "06": "circle (CCW)",
+            "07": "spline 1",
+            "08": "spline 2"
+        }
+        condition_id = "A" if condition_id == "01" else "B"
+        return f"Activity {rename[activity_id]} | Condition  {condition_id}"
+
     def handle_atrributes_under_condition(attributes_under_condition: ActivityUnderConditions, subject_data: MurderWallDetective, activity_index: int, condition: str):
         right_handed_auc = compute_area_under_curve(attributes_under_condition.right_handed, create_label)
         left_handed_auc = compute_area_under_curve(attributes_under_condition.left_handed, create_label)
@@ -30,7 +44,7 @@ def make_emg_area_under_curve_on_different_attributes_plots(subject_data: Murder
         merged_data = merge_data_frames(WorkingData([right_handed_auc, left_handed_auc, impaired_left_handed_auc, impaired_right_handed_auc]))
         plot_no_save(
             merged_data,
-            f"Activity {subject_data.get_activity_id(2 * activity_index)} | Condition  {condition}",
+            create_title(subject_data.get_activity_id(2 * activity_index), condition),
             f"../test_data/plot_3/activity_{subject_data.get_activity_id(2 * activity_index)}_condition_{condition}",
             "Muscle",
             ["#293F14", "#729E1A", "#68121B", "#68121B"],
@@ -67,7 +81,20 @@ def make_emg_area_under_curve_on_different_activities_plots(subject_data: Murder
 
 def make_emg_area_under_curve_on_different_conditions_plots(subject_data: MurderWallDetective):
     def create_label(trial: MurderWallAsset) -> str:
-        return f"C{trial.metadata.condition}"
+        return f"c{trial.metadata.condition}"
+
+    def rename_plot_title(activity_id: str) -> str:
+        rename = {
+            "01": "x-axis",
+            "02": "y-axis",
+            "03": "z-axis",
+            "04": "torque",
+            "05": "circle (CW)",
+            "06": "circle (CCW)",
+            "07": "spline 1",
+            "08": "spline 2"
+        }
+        return f"Activity {rename[activity_id]}"
 
     for i, conditions in enumerate(subject_data.get_clipped_activity_pairs()):
         condition_1, condition_2 = conditions
@@ -75,14 +102,14 @@ def make_emg_area_under_curve_on_different_conditions_plots(subject_data: Murder
         area_under_curve_condition_2 = compute_area_under_curve(condition_2, create_label)
         merged_data = merge_data_frames(WorkingData([area_under_curve_condition_1, area_under_curve_condition_2]))
         plot_no_save(
-            merged_data,
-            f"Activity {subject_data.get_activity_id(2 * i)}",
-            f"../test_data/plot_1/activity_{subject_data.get_activity_id(2 * i)}",
-            "Muscle (Condition 1, Condition 2)",
-            ["#984ea3", "#ff7f00"],
-            ["Condition 1", "Condition 2"],
-            LabelsPerColumn.DOUBLEUP,
-            2
+            area_under_curve_data=merged_data,
+            plot_title=rename_plot_title(subject_data.get_activity_id(2 * i)),
+            store_at=f"../test_data/plot_1/activity_{subject_data.get_activity_id(2 * i)}",
+            x_label="Muscle",
+            colors=["#984ea3", "#ff7f00"],
+            labels=["Condition A", "Condition B"],
+            labels_per_column=LabelsPerColumn.DOUBLEUP,
+            clip=2
         )
 
 
