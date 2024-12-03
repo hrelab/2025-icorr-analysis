@@ -7,7 +7,6 @@ import numpy as np
 import seaborn as sns
 from dataclasses import dataclass
 from gstd.working_data import WorkingData
-from enum import Enum
 
 
 @dataclass
@@ -18,14 +17,7 @@ class ActivityUnderConditions:
     impaired_right_handed: List[MurderWallAsset]
 
 
-class LabelsPerColumn(Enum):
-    SINGLEUP = 1
-    DOUBLEUP = 2
-    TRIPLEUP = 3
-    QUATROUP = 4
-
-
-def plot_no_save(area_under_curve_data: pd.DataFrame, plot_title: str, store_at: str, x_label: str, colors: List[str], labels: List[str], labels_per_column: LabelsPerColumn = LabelsPerColumn.SINGLEUP, clip: int = -1):
+def plot_no_save(area_under_curve_data: pd.DataFrame, plot_title: str, store_at: str, x_label: str, colors: List[str], labels: List[str], labels_per_column: int = 1, clip: int = -1):
     area_under_curve_data.to_csv(f"{store_at}.csv")
     test_df = area_under_curve_data.melt(var_name='type', value_name='value')
     palette = dict(zip(area_under_curve_data.columns, cycle(colors)))
@@ -52,13 +44,28 @@ def plot_no_save(area_under_curve_data: pd.DataFrame, plot_title: str, store_at:
         linewidth=5,
     )
 
+    x_positions = {category: pos for pos, category in enumerate(area_under_curve_data.columns)}
+
+    for col in area_under_curve_data.columns:
+        values = area_under_curve_data[col].dropna()
+        if len(values) == 1:  # Check for single data points
+            ax.scatter(
+                x=[x_positions[col]],  # Correct x-position
+                y=values.values,      # Single data point value
+                color=palette[col],   # Match the palette color
+                s=300,                # Adjust the size of the point
+                edgecolor='black',    # Add a border for visibility
+                linewidth=2,
+                zorder=10,            # Place above other elements
+            )
+
     # we should rename clip here, it makes sense but has already been assigned to shortening the length of a frame relative to another frame.
-    if labels_per_column != LabelsPerColumn.SINGLEUP:
-        tick_positions = np.arange(0.5, len(area_under_curve_data.columns), labels_per_column.value)
+    if labels_per_column > 1:
+        tick_positions = np.arange(0.5, len(area_under_curve_data.columns), labels_per_column)
         if clip > 0:
-            tick_labels = [area_under_curve_data.columns[i][:clip] for i in range(1, len(area_under_curve_data.columns), labels_per_column.value)]
+            tick_labels = [area_under_curve_data.columns[i][:clip] for i in range(1, len(area_under_curve_data.columns), labels_per_column)]
         else:
-            tick_labels = [area_under_curve_data.columns[i] for i in range(1, len(area_under_curve_data.columns), labels_per_column.value)]
+            tick_labels = [area_under_curve_data.columns[i] for i in range(1, len(area_under_curve_data.columns), labels_per_column)]
         ax.set_xticks(tick_positions)
         ax.set_xticklabels(tick_labels, ha='center')
 

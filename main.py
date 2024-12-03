@@ -7,7 +7,6 @@ from src.analysis_tools.area_under_curve_plotting_utilities import (
     break_into_seperate_conditions,
     merge_data_frames,
     ActivityUnderConditions,
-    LabelsPerColumn,
     compute_area_under_curve
 )
 from src.murder_wall.experiment_parameters import ExperimentParameters
@@ -41,15 +40,15 @@ def make_emg_area_under_curve_on_different_attributes_plots(subject_data: Murder
         left_handed_auc = compute_area_under_curve(attributes_under_condition.left_handed, create_label)
         impaired_left_handed_auc = compute_area_under_curve(attributes_under_condition.impaired_left_handed, create_label)
         impaired_right_handed_auc = compute_area_under_curve(attributes_under_condition.impaired_right_handed, create_label)
-        merged_data = merge_data_frames(WorkingData([right_handed_auc, left_handed_auc, impaired_left_handed_auc, impaired_right_handed_auc]))
+        merged_data = merge_data_frames(WorkingData([right_handed_auc, left_handed_auc, impaired_right_handed_auc, impaired_left_handed_auc]))
         plot_no_save(
             merged_data,
             create_title(subject_data.get_activity_id(2 * activity_index), condition),
             f"../test_data/plot_3/activity_{subject_data.get_activity_id(2 * activity_index)}_condition_{condition}",
             "Muscle",
-            ["#293F14", "#729E1A", "#68121B", "#68121B"],
-            ["Right Handed", "Left Handed", "Impaired Left Handed", "Impaired Right Handed"],
-            LabelsPerColumn.QUATROUP,
+            ["#293F14", "#729E1A", "#68121B", "#843b3b"],
+            ["healthy, right handed (RH tested)", "healthy, left handed (RH tested)", "right hand paretic (RH tested)", "left side paretic (LH tested)"],
+            4,
             2
         )
 
@@ -68,7 +67,13 @@ def make_emg_area_under_curve_on_different_activities_plots(subject_data: Murder
     def make_plot_for_certain_muscle(subject_data: MurderWallDetective, condition_data: pd.DataFrame, condition_id: str):
         for muscle in [f"{column}_C{condition_id}" for column in subject_data.get_columns()[3:]]:
             merged_data = pd.DataFrame({f"Activity {subject_data.get_activity_id(2 * i)}": frame[muscle] for i, frame in enumerate(condition_data)})
-            plot_no_save(merged_data, f"Muscle {muscle[:-4]} | Condition {condition_id}", f"../test_data/plot_2/{muscle}", "Activity", ["#984ea3"], [])
+            plot_no_save(
+                merged_data,
+                f"Muscle {muscle[:-4]} | Condition {condition_id}",
+                f"../test_data/plot_2/{muscle}",
+                "Activity",
+                ["#984ea3"], []
+            )
 
     condition_1_values, condition_2_values = (
         WorkingData([activity for activity in subject_data.get_clipped_activity_pairs()])
@@ -108,7 +113,7 @@ def make_emg_area_under_curve_on_different_conditions_plots(subject_data: Murder
             x_label="Muscle",
             colors=["#984ea3", "#ff7f00"],
             labels=["Condition A", "Condition B"],
-            labels_per_column=LabelsPerColumn.DOUBLEUP,
+            labels_per_column=2,
             clip=2
         )
 
