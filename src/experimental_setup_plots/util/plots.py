@@ -44,7 +44,8 @@ class plotGenerator():
     plt.rcParams["xtick.labelsize"] = 10
     plt.rcParams["ytick.labelsize"] = 10
 
-    fontPath = os.path.join('Open_Sans')
+    fontPath = os.path.join('src', 'experimental_setup_plots', 'Open_Sans')
+
     for path in os.listdir(fontPath):
             if (path.endswith('.ttf')):
                 path = os.path.join(fontPath, path)

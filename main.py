@@ -11,6 +11,11 @@ from src.analysis_tools.area_under_curve_plotting_utilities import (
 from src.murder_wall.experiment_parameters import ExperimentParameters
 from src.gstd.working_data import WorkingData
 from src.analysis_tools.plotting_utilities import plot_chunk, make_boxplot, make_scatter
+
+from src.experimental_setup_plots import (
+    dataRelease, expSetupFigures
+    )
+
 import pandas as pd
 
 
@@ -131,17 +136,24 @@ def make_emg_area_under_curve_on_different_conditions_plots(subject_data: Murder
 
 
 def main():
+    '''
     experiment_parameters: ExperimentParameters = ExperimentParameters(
         activities=[f"0{n}" for n in range(1, 9)],
         conditions=["01", "02"],
         subjects=get_subjects("../proc_data"),
         data_types=["emg", "force"]
     )
+
     murder_wall: MurderWall = MurderWall(experiment_parameters)
     subject_data: MurderWallDetective = murder_wall.create_layout()
     make_emg_area_under_curve_on_different_conditions_plots(subject_data)
     make_emg_area_under_curve_on_different_activities_plots(subject_data)
     make_emg_area_under_curve_on_different_attributes_plots(subject_data)
+    '''
+
+    # Evan's code --------------------------------------------------
+    dataRelease.generateExemplar()
+    expSetupFigures.generatePaperFigures()
 
 
 if __name__ == "__main__":

@@ -1,11 +1,11 @@
-import util.showPlots as showPlots
+from src.experimental_setup_plots.util.showPlots import showPlots
 import matplotlib.pyplot as plt
 import os
 
 # Generates the "Experiment Setup" figures as seen on the paper
 #   - EMG for subject 7, condition A, activity 2
 def generatePaperFigures():
-    sp = showPlots.showPlots()
+    sp = showPlots()
 
     # Parameters to remove borders on plots
     plt.rcParams['axes.spines.top'] = False

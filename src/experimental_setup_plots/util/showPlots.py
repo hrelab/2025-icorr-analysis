@@ -1,5 +1,5 @@
-import util.fileRead as fileRead
-import util.plots as plots
+from experimental_setup_plots.util.fileRead import fileReader
+from experimental_setup_plots.util.plots import plotGenerator
 import os
 '''
     Utilizes plots class to generate figure(s) for subjects
@@ -8,10 +8,10 @@ import os
 class showPlots():
 
     def __init__(self):
-        self.fr = fileRead.fileReader()
+        self.fr = fileReader()
 
         # Initialize plot generator and insert data
-        self.pl = plots.plotGenerator()
+        self.pl = plotGenerator()
         self.pl.activityOrder = ['x-axis', 'y-axis', 'z-axis', 'torque', 'CW Circle', 'CCW Circle', 'XY 1', 'XY 2']
         self.pl.sharex = False
 
@@ -88,6 +88,7 @@ class showPlots():
             if (folderName == 'figures'):
                 continue
             self.subjectFigures(folderName)
+        os.chdir('..')
 
     # Given a subject, will create figures for entire activity
     def subjectFigures(self, subject):
@@ -118,10 +119,10 @@ class showPlots():
 class showPlotsProcessed():
 
     def __init__(self):
-        self.fr = fileRead.fileReader()
+        self.fr = fileReader()
 
         # Initialize plot generator and insert data
-        self.pl = plots.plotGenerator()
+        self.pl = plotGenerator()
         self.pl.activityOrder = ['x-axis', 'y-axis', 'z-axis', 'torque', 'CW Circle', 'CCW Circle', 'XY 1', 'XY 2']
         self.pl.sharex = True
 

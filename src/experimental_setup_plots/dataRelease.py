@@ -1,9 +1,9 @@
-import util.showPlots as showPlots
+from experimental_setup_plots.util.showPlots import showPlots
 import matplotlib.pyplot as plt
 import os
 
 def generateExemplar():
-    sp = showPlots.showPlots()
+    sp = showPlots()
 
     sp.pl.sharex = True
 
