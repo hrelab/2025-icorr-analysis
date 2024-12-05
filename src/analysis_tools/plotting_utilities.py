@@ -1,8 +1,9 @@
 import seaborn as sns
-from typing import List, Dict, Callable
+from typing import List, Dict, Callable, Tuple
 from pandas import DataFrame
 import matplotlib.pyplot as plt
 from itertools import cycle
+from statannotations.Annotator import Annotator
 
 
 def vector_with_no_duplicates(vector: List):
@@ -69,6 +70,35 @@ def handle_legend(labels: List[str], colors: List[str], title: str, ax):
     )
 
 
+def setup_plot(x_label: str, title: str):
+    plt.figure(figsize=(40, 15))
+    plt.ylabel("sEMG AUC", labelpad=30)
+    plt.xlabel(x_label, labelpad=30)
+    plt.title(title)
+    plt.tight_layout()
+
+
+def plot_group(i: int, data_frame: DataFrame, palette, ax, plotters: List[Callable]):
+    box_columns = data_frame.columns[i - 2:i]
+    scatter_columns = data_frame.columns[i:i + 2]
+    box_data = data_frame[box_columns].melt(var_name='Variable', value_name='Value')
+    scatter_data = data_frame[scatter_columns].melt(var_name="Variable", value_name="Value")
+    plotters[0]("Variable", "Value", ax, box_data, palette)
+    plotters[1]("Variable", "Value", ax, scatter_data, palette)
+
+
+def annotate_plot(
+        data_frame: DataFrame,
+        ax,
+        pairs: List[tuple],
+        precomputed_pvalues: List[float]
+):
+    data_melted = data_frame.melt(var_name="Variable", value_name="Value")
+    annotator = Annotator(ax, pairs, data=data_melted, x="Variable", y="Value")
+    annotator.configure(test="Wilcoxon", text_format="star", loc="inside", verbose=2, hide_non_significant=True)
+    annotator.apply_and_annotate()
+
+
 def plot_chunk(
         data_frame: DataFrame,
         colors: List[str],
@@ -80,7 +110,9 @@ def plot_chunk(
         save_in_formats: List[str],
         sub_group_length: int = 1,
         show_legend: bool = False,
-        label_maker: Callable[[str], str] = lambda x: x
+        label_maker: Callable[[str], str] = lambda x: x,
+        pairs: List[Tuple] = [],
+        p_values: List[float] = []
 ):
     palette = dict(zip(data_frame.columns, cycle(colors)))
     sns.set(style='darkgrid', rc={
@@ -92,20 +124,13 @@ def plot_chunk(
         'ytick.labelsize': 30,  # Y-axis tick label font size
     })
     data_frame.to_csv(f"{save_as}.csv")
-    plt.figure(figsize=(40, 15))
-    plt.ylabel("sEMG AUC", labelpad=30)
-    plt.xlabel(x_label, labelpad=30)
-    plt.title(title)
-    plt.tight_layout()
+    setup_plot(x_label, title)
     ax = plt.gca()
     for i in [i for i in range(2, len(data_frame.columns), 4)]:
-        box_columns = data_frame.columns[i - 2:i]
-        scatter_columns = data_frame.columns[i:i + 2]
-        box_data = data_frame[box_columns].melt(var_name='Variable', value_name='Value')
-        scatter_data = data_frame[scatter_columns].melt(var_name="Variable", value_name="Value")
-        plotters[0]("Variable", "Value", ax, box_data, palette)
-        plotters[1]("Variable", "Value", ax, scatter_data, palette)
+        plot_group(i, data_frame, palette, ax, plotters)
     handle_x_axis(sub_group_length, data_frame, ax, label_maker)
+    if len(pairs) != 0 and len(p_values) != 0:
+        annotate_plot(data_frame, ax, pairs, p_values)
     if show_legend:
         handle_legend(labels, colors, "Legend", ax)
     for file_format in save_in_formats:

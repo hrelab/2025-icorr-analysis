@@ -26,7 +26,8 @@ dependencies = [
     "pandas-stubs",
     "mypy",
     "pytest",
-    "seaborn"
+    "seaborn",
+    "statannotations"
 ]
 
 [tool.pytest.ini_options]
