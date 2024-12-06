@@ -49,7 +49,8 @@ def handle_atrributes_under_condition(attributes_under_condition: ActivityUnderC
         save_in_formats=["png", "pdf"],
         sub_group_length=4,
         show_legend=True,
-        label_maker=lambda x: x[:2]
+        label_maker=lambda x: x[:2],
+        custom_legend=dict(zip(["healthy, right handed (RH tested)", "healthy, left handed (RH tested)", "right hand paretic (RH tested)", "left side paretic (LH tested)"], ["#293F14", "#729E1A", "#68121B", "#843b3b"]))
     )
 
 

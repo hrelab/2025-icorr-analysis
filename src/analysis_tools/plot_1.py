@@ -47,5 +47,6 @@ def make_plot_1(subject_data: MurderWallDetective):
             show_legend=True,
             label_maker=lambda x: x[:2],
             pairs=pairs,
-            test="Wilcoxon"
+            test="Wilcoxon",
+            custom_legend=dict(zip(["Condition A", "Condition B"], ["#984ea3", "#ff7f00"]))
         )
