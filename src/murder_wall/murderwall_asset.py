@@ -6,18 +6,27 @@ from dataclasses import dataclass
 
 @dataclass
 class FrameData:
+    """
+        Holds frame data for a certain trial
+    """
     emg_data: DataFrame
     force_data: DataFrame
 
 
 @dataclass
 class PathData:
+    """
+        Holds path data for a certain trial
+    """
     emg_path: str
     force_path: str
 
 
 @dataclass
 class MurderWallAsset:
+    """
+        Holds frame data, path data, and metadata regarding a certain trial
+    """
     frame_data: FrameData
     path_data: PathData
     metadata: TrialData
@@ -35,6 +44,9 @@ class MurderWallAsset:
         return self.path_data.force_path
 
     def clip_emg_asset(self, clip_length) -> MurderWallAsset:
+        """
+            Clips emg data down to the clip length
+        """
         assert clip_length > 0
         emg, force = self.get_emg_frame(), self.get_force_frame()
         new_emg = emg.iloc[0:clip_length, :]

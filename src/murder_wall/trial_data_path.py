@@ -6,6 +6,10 @@ from .murderwall_asset import PathData, FrameData
 
 
 class TrialDataPath:
+    """
+        Creates a path to the pre-proced data being stored for a certain trial.
+    """
+
     def __init__(self, path: str, d_types: List[str], trial_data: TrialData):
         self.path = path
         self.d_types = d_types
@@ -26,10 +30,16 @@ class TrialDataPath:
         return (emg_path, force_path)
 
     def get_path(self) -> PathData:
+        """
+            Gets the path data for a certain trial
+        """
         emg, force = self._get()
         return PathData(emg, force)
 
     def get_data_frame(self) -> FrameData:
+        """
+            Loads pandas dataframes for a certain trial
+        """
         emg, force = self._get()
         print(f"Converting {emg} to dataframe")
         print(f"Converting {force} to dataframe")

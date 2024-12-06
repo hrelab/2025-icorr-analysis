@@ -4,6 +4,9 @@ from dataclasses import dataclass
 
 @dataclass
 class Subject:
+    """
+        Holds data about a subject.
+    """
     id: str
     gender: str
     age: int
@@ -12,6 +15,11 @@ class Subject:
 
     @staticmethod
     def from_id(id: str) -> Subject:
+        """
+            Creates a valid subject from an id.
+
+            This should be changed a serialized version from another file.
+        """
         match id:
             case "02":
                 return Subject("02", "M", 20, "Left", False)
