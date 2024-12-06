@@ -89,7 +89,7 @@ def handle_legend(labels: List[str], colors: List[str], title: str, ax):
     )
 
 
-def custom_legend(legend_values: Dict[str, str], title: str, ax):
+def customize_legend(legend_values: Dict[str, str], title: str, ax):
     patches = [mpatches.Patch(color=color, label=label) for label, color in legend_values.items()]
     ax.legend(
         handles=patches,
@@ -168,7 +168,7 @@ def plot_chunk(
     if show_legend and custom_legend is None:
         handle_legend(labels, colors, "", ax)
     if show_legend and custom_legend is not None:
-        custom_legend(custom_legend, "", ax)
+        customize_legend(custom_legend, "", ax)
     for file_format in save_in_formats:
         plt.savefig(f"{save_as}.{file_format}")
     plt.close()
