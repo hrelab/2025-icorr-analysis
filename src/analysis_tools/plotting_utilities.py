@@ -21,7 +21,8 @@ def partition_interval(start: int, stop: int, partition_segment_length: int) -> 
 def calculate_midpoint_for_partioned_interval(partitioned_interval: List[List[int]]) -> List[int]:
     def midpoint(p_0, p_n):
         return (p_0 + p_n) / 2
-    return [midpoint(interval[0], interval[-1]) for interval in partitioned_interval]
+    interval = [midpoint(interval[0], interval[-1]) for interval in partitioned_interval]
+    return interval
 
 
 def make_boxplot(x: str, y: str, ax, data: DataFrame, palette: Dict[str, str]):
@@ -55,6 +56,12 @@ def handle_x_axis(sub_group_length: int, data_frame: DataFrame, ax, label_maker:
     tick_positions = ax.get_xticks()
     ax.set_xticks(calculate_midpoint_for_partioned_interval(partition_interval(tick_positions[0], tick_positions[-1] + 1, sub_group_length)))
     ax.set_xticklabels(vector_with_no_duplicates(map(label_maker, data_frame.columns)))
+
+
+def x_axis_no_duplicates(sub_group_length: int, data_frame: DataFrame, ax, label_maker: Callable[[str], str]):
+    tick_positions = ax.get_xticks()
+    ax.set_xticks(calculate_midpoint_for_partioned_interval(partition_interval(tick_positions[0], tick_positions[-1] + 1, sub_group_length)))
+    ax.set_xticklabels(list(map(label_maker, data_frame.columns)))
 
 
 def handle_legend(labels: List[str], colors: List[str], title: str, ax):
@@ -91,11 +98,11 @@ def annotate_plot(
         data_frame: DataFrame,
         ax,
         pairs: List[tuple],
-        precomputed_pvalues: List[float]
+        test: str
 ):
     data_melted = data_frame.melt(var_name="Variable", value_name="Value")
     annotator = Annotator(ax, pairs, data=data_melted, x="Variable", y="Value")
-    annotator.configure(test="Wilcoxon", text_format="star", loc="inside", verbose=2, hide_non_significant=True)
+    annotator.configure(test=test, text_format="star", loc="inside", verbose=2, hide_non_significant=True)
     annotator.apply_and_annotate()
 
 
@@ -112,7 +119,8 @@ def plot_chunk(
         show_legend: bool = False,
         label_maker: Callable[[str], str] = lambda x: x,
         pairs: List[Tuple] = [],
-        p_values: List[float] = []
+        test: str = None,
+        handle_axis: Callable = handle_x_axis
 ):
     palette = dict(zip(data_frame.columns, cycle(colors)))
     sns.set(style='darkgrid', rc={
@@ -128,11 +136,11 @@ def plot_chunk(
     ax = plt.gca()
     for i in [i for i in range(2, len(data_frame.columns), 4)]:
         plot_group(i, data_frame, palette, ax, plotters)
-    handle_x_axis(sub_group_length, data_frame, ax, label_maker)
-    if len(pairs) != 0 and len(p_values) != 0:
-        annotate_plot(data_frame, ax, pairs, p_values)
+    handle_axis(sub_group_length, data_frame, ax, label_maker)
+    if len(pairs) != 0 and test is not None:
+        annotate_plot(data_frame, ax, pairs, test)
     if show_legend:
-        handle_legend(labels, colors, "Legend", ax)
+        handle_legend(labels, colors, "", ax)
     for file_format in save_in_formats:
         plt.savefig(f"{save_as}.{file_format}")
     plt.close()

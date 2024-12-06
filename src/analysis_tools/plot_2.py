@@ -1,10 +1,10 @@
-from src.murder_wall.murderwall_detective import MurderWallDetective
-from src.murder_wall.murderwall_asset import MurderWallAsset
-from src.analysis_tools.area_under_curve_plotting_utilities import (
+from murder_wall.murderwall_detective import MurderWallDetective
+from murder_wall.murderwall_asset import MurderWallAsset
+from analysis_tools.area_under_curve_plotting_utilities import (
     compute_area_under_curve
 )
-from src.gstd.working_data import WorkingData
-from src.analysis_tools.plotting_utilities import plot_chunk, make_boxplot
+from gstd.working_data import WorkingData
+from analysis_tools.plotting_utilities import plot_chunk, make_boxplot
 import pandas as pd
 
 

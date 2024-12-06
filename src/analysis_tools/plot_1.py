@@ -1,11 +1,11 @@
-from src.murder_wall.murderwall_detective import MurderWallDetective
-from src.murder_wall.murderwall_asset import MurderWallAsset
-from src.analysis_tools.area_under_curve_plotting_utilities import (
+from murder_wall.murderwall_detective import MurderWallDetective
+from murder_wall.murderwall_asset import MurderWallAsset
+from analysis_tools.area_under_curve_plotting_utilities import (
     merge_data_frames,
     compute_area_under_curve
 )
-from src.gstd.working_data import WorkingData
-from src.analysis_tools.plotting_utilities import plot_chunk, make_boxplot
+from gstd.working_data import WorkingData
+from analysis_tools.plotting_utilities import plot_chunk, make_boxplot
 
 
 def create_label(trial: MurderWallAsset) -> str:
@@ -47,5 +47,5 @@ def make_plot_1(subject_data: MurderWallDetective):
             show_legend=True,
             label_maker=lambda x: x[:2],
             pairs=pairs,
-            p_values=[i for i in range(0, 8)]
+            test="Wilcoxon"
         )

@@ -4,6 +4,7 @@ from src.analysis_tools.patient_data_extractor import get_subjects
 from src.analysis_tools.plot_3 import make_plot_3
 from src.analysis_tools.plot_1 import make_plot_1
 from src.analysis_tools.plot_2 import make_plot_2
+import src.analysis_tools.plot_2_paper_version as p2pv
 from src.murder_wall.experiment_parameters import ExperimentParameters
 
 
@@ -18,6 +19,7 @@ def main():
     subject_data: MurderWallDetective = murder_wall.create_layout()
     make_plot_1(subject_data)
     make_plot_2(subject_data)
+    p2pv.make_plot_2(subject_data)
     make_plot_3(subject_data)
 
 
