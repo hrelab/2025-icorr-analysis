@@ -9,6 +9,10 @@ from typing import List
 
 
 class MurderWall:
+    """
+        Orders data in the same fashion as our murder wall. Makes things a little easier to think about (sometimes).
+    """
+
     def __init__(self, experiment_parameters: ExperimentParameters):
         self.experiment_parameters: ExperimentParameters = experiment_parameters
 
@@ -24,4 +28,7 @@ class MurderWall:
         return list(chain.from_iterable([self._create_activity_column(subject_id, activity_id) for activity_id in self.experiment_parameters.activities]))
 
     def create_layout(self) -> MurderWallDetective:
+        """
+            Creates a MurderWallDetective that has access to the ordered data. The murderwall detective can act on this data.
+        """
         return MurderWallDetective([self._create_subject_row(subject_id) for subject_id in self.experiment_parameters.subjects])

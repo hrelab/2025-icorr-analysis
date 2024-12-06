@@ -8,6 +8,11 @@ import matplotlib.patches as mpatches
 
 
 def vector_with_no_duplicates(vector: List):
+    """
+        Removes duplicates from a list. Very Efficient :) <--- This is a joke, this is an awful implementation.
+
+        Order preserving, when I previously used a set, we had different plots each time the program was run.
+    """
     v = []
     for item in vector:
         if item not in v:
@@ -16,10 +21,16 @@ def vector_with_no_duplicates(vector: List):
 
 
 def partition_interval(start: int, stop: int, partition_segment_length: int) -> List[List[int]]:
+    """
+        Splits an interval into even segments based on the partition_segment_length
+    """
     return [list(range(i, i + partition_segment_length)) for i in range(start, stop, partition_segment_length)]
 
 
 def calculate_midpoint_for_partioned_interval(partitioned_interval: List[List[int]]) -> List[int]:
+    """
+        Calculates the midpoint of each partition in a partitioned interval
+    """
     def midpoint(p_0, p_n):
         return (p_0 + p_n) / 2
     interval = [midpoint(interval[0], interval[-1]) for interval in partitioned_interval]
@@ -78,7 +89,7 @@ def handle_legend(labels: List[str], colors: List[str], title: str, ax):
     )
 
 
-def custum_legend(legend_values: Dict[str, str], title: str, ax):
+def custom_legend(legend_values: Dict[str, str], title: str, ax):
     patches = [mpatches.Patch(color=color, label=label) for label, color in legend_values.items()]
     ax.legend(
         handles=patches,
@@ -157,7 +168,7 @@ def plot_chunk(
     if show_legend and custom_legend is None:
         handle_legend(labels, colors, "", ax)
     if show_legend and custom_legend is not None:
-        custum_legend(custom_legend, "", ax)
+        custom_legend(custom_legend, "", ax)
     for file_format in save_in_formats:
         plt.savefig(f"{save_as}.{file_format}")
     plt.close()

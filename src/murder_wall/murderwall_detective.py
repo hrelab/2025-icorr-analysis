@@ -32,6 +32,11 @@ class MurderWallDetective:
         return min([asset.get_emg_frame_length() for asset in activity])
 
     def get_clipped_activity_pairs(self):
+        """
+            Returns a tuple representing Activity_n under condition a and condition b for each activity in the experiment.
+
+            Automatically clips emg data for all trials in both conditions.
+        """
         for i in range(0, self.columns, 2):
             activity_condition_1 = self.get_activity(i)
             activity_condition_2 = self.get_activity(i + 1)

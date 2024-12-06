@@ -15,6 +15,11 @@ class ActivityUnderConditions:
 
 
 def break_into_seperate_conditions(activity: List[MurderWallAsset]) -> ActivityUnderConditions:
+    """
+        Splits given data into groups seperated by impairedness and handedness.
+
+        [All Subjects] -> [(Left, Non-impaired), (Right, Non-impaired), (Left, Impaired), (Right, Impaired)]
+    """
     activity_wrapped = WorkingData(activity)
     left_handed = (
         activity_wrapped
@@ -40,6 +45,11 @@ def break_into_seperate_conditions(activity: List[MurderWallAsset]) -> ActivityU
 
 
 def compute_area_under_curve(activity: List[MurderWallAsset], label_format: Callable[[MurderWallAsset], str]) -> pd.DataFrame:
+    """
+        Computes the area for a given activity
+
+        @param label_format: Determines how overlapping x-labels should be handled so data is concated properly
+    """
     label = label_format(activity[0])
     columns = activity[0].get_emg_frame().columns.tolist()[3:]
     area_under_curve_data_frame = pd.DataFrame(columns=columns)
@@ -55,6 +65,9 @@ def compute_area_under_curve(activity: List[MurderWallAsset], label_format: Call
 
 
 def merge_data_frames(data_frames: WorkingData[pd.DataFrame]) -> pd.DataFrame:  # auc = area under curve
+    """
+        Merges given dataframes together. Assumes that column names will not colide.
+    """
     columns = (
         data_frames
         .map(lambda frame: frame.columns.tolist())
