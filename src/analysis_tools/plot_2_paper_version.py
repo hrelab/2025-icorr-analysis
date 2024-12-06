@@ -52,5 +52,6 @@ def make_plot_2(subject_data: MurderWallDetective):
         label_maker=lambda x: label_maker(x[-2:]),
         pairs=pairs,
         test="Kruskal",
-        handle_axis=x_axis_no_duplicates
+        handle_axis=x_axis_no_duplicates,
+        custom_legend=dict([("AD", "#163E64"), ("EX", "#215F9A")])
     )

@@ -4,6 +4,7 @@ from pandas import DataFrame
 import matplotlib.pyplot as plt
 from itertools import cycle
 from statannotations.Annotator import Annotator
+import matplotlib.patches as mpatches
 
 
 def vector_with_no_duplicates(vector: List):
@@ -65,9 +66,22 @@ def x_axis_no_duplicates(sub_group_length: int, data_frame: DataFrame, ax, label
 
 
 def handle_legend(labels: List[str], colors: List[str], title: str, ax):
+    patches = [mpatches.Patch(color=c, label=l) for c, l in zip(colors, labels)]
     ax.legend(
-        [plt.Line2D([0], [0], color=colors[i], lw=4, label=labels[i]) for i in range(len(labels))],
-        labels,
+        handles=patches,
+        title=title,
+        loc="upper right",
+        ncol=1,
+        title_fontsize=30,
+        fontsize=30,
+        facecolor='white',
+    )
+
+
+def custum_legend(legend_values: Dict[str, str], title: str, ax):
+    patches = [mpatches.Patch(color=color, label=label) for label, color in legend_values.items()]
+    ax.legend(
+        handles=patches,
         title=title,
         loc="upper right",
         ncol=1,
@@ -120,7 +134,8 @@ def plot_chunk(
         label_maker: Callable[[str], str] = lambda x: x,
         pairs: List[Tuple] = [],
         test: str = None,
-        handle_axis: Callable = handle_x_axis
+        handle_axis: Callable = handle_x_axis,
+        custom_legend: Dict = None
 ):
     palette = dict(zip(data_frame.columns, cycle(colors)))
     sns.set(style='darkgrid', rc={
@@ -139,8 +154,10 @@ def plot_chunk(
     handle_axis(sub_group_length, data_frame, ax, label_maker)
     if len(pairs) != 0 and test is not None:
         annotate_plot(data_frame, ax, pairs, test)
-    if show_legend:
+    if show_legend and custom_legend is None:
         handle_legend(labels, colors, "", ax)
+    if show_legend and custom_legend is not None:
+        custum_legend(custom_legend, "", ax)
     for file_format in save_in_formats:
         plt.savefig(f"{save_as}.{file_format}")
     plt.close()
