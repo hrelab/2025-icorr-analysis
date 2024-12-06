@@ -2,24 +2,28 @@
 
 Creates plots using the data collected for icorr-2025
 
-## Setting Up Environment
+# Setting Up Environment
 
 Run the following commands based on the state of your project.
 
-### If you have pre-existing python virtual python environment
+## If you have pre-existing python virtual python environment
 
-Activate the environment :)
+1. Activate the environment :)
 
-### Otherwise
+2. Run `python -m pip install -e .` and the pyproject.toml will handle dependencies for you.
 
-### Create virtual environent
+## If you do not have a pre-existing python virtual environment
 
-`python -m venv .venv`
+1. Create the env `python -m venv .venv`
 
-### Source the environment.
+2. Source the env `source .venv/bin/activate`
 
-`source .venv/bin/activate`
+3. Run `python -m pip install -e .` and the pyproject.toml will handle dependencies for you.
 
-### Using the pyproject.toml for project management.
+# Generating Plots
 
-`python -m pip install -e .`
+1. Make sure that you have the pre-processed data.
+
+2. Make sure to have followed the virtual environment setup from above.
+
+3. In the root of the project, run `python main.py`
