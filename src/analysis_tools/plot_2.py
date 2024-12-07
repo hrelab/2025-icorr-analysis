@@ -6,6 +6,7 @@ from analysis_tools.area_under_curve_plotting_utilities import (
 from gstd.working_data import WorkingData
 from analysis_tools.plotting_utilities import plot_chunk, make_boxplot
 from itertools import combinations
+from os.path import join
 import pandas as pd
 
 
@@ -20,7 +21,7 @@ def make_plot_for_certain_muscle(subject_data: MurderWallDetective, condition_da
             plotters=[make_boxplot, make_boxplot],
             title=f"Muscle {muscle[:-4]} | Condition {condition_id}",
             x_label="Activity",
-            save_as=f"../test_data/plot_2/{muscle}",
+            save_as=join("..", "test_data", "plot_2", f"{muscle}"),
             save_in_formats=["png", "pdf"],
             sub_group_length=1,
             show_legend=False,

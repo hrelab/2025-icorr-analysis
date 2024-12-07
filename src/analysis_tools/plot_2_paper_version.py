@@ -3,6 +3,7 @@ from murder_wall.murderwall_asset import MurderWallAsset
 from gstd.working_data import WorkingData
 from .area_under_curve_plotting_utilities import compute_area_under_curve, merge_data_frames
 from itertools import combinations
+from os.path import join
 from .plotting_utilities import (
     plot_chunk,
     make_boxplot,
@@ -45,7 +46,7 @@ def make_plot_2(subject_data: MurderWallDetective):
         plotters=[make_boxplot, make_boxplot],
         title="Area Under Curve vs Muscle and Activity",
         x_label="Goal Trajectory",
-        save_as="../test_data/plot_2/plot_2_for_paper",
+        save_as=join("..", "test_data", "plot_2", "plot_2_for_paper"),
         save_in_formats=["png", "pdf", "svg"],
         sub_group_length=1,
         show_legend=True,
