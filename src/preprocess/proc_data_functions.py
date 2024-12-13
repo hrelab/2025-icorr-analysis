@@ -30,13 +30,13 @@ def grabData(partNum, cond, act):
     '''
     # Pull in all the data for the given combination (first try revision 2, then 1)
     try:
-        emgData = pd.read_csv(f"data/emg/rosbag-data-{partNum}-{cond}-{act}-02_0_emg.csv")
-        gameData = pd.read_csv(f"data/game/rosbag-data-{partNum}-{cond}-{act}-02_0_game.csv")
-        forceData = pd.read_csv(f"data/force/rosbag-data-{partNum}-{cond}-{act}-02_0_force.csv")
+        emgData = pd.read_csv(f"raw_data/emg/rosbag-data-{partNum}-{cond}-{act}-02_0_emg.csv")
+        gameData = pd.read_csv(f"raw_data/game/rosbag-data-{partNum}-{cond}-{act}-02_0_game.csv")
+        forceData = pd.read_csv(f"raw_data/force/rosbag-data-{partNum}-{cond}-{act}-02_0_force.csv")
     except:
-        emgData = pd.read_csv(f"data/emg/rosbag-data-{partNum}-{cond}-{act}-01_0_emg.csv")
-        gameData = pd.read_csv(f"data/game/rosbag-data-{partNum}-{cond}-{act}-01_0_game.csv")
-        forceData = pd.read_csv(f"data/force/rosbag-data-{partNum}-{cond}-{act}-01_0_force.csv")
+        emgData = pd.read_csv(f"raw_data/emg/rosbag-data-{partNum}-{cond}-{act}-01_0_emg.csv")
+        gameData = pd.read_csv(f"raw_data/game/rosbag-data-{partNum}-{cond}-{act}-01_0_game.csv")
+        forceData = pd.read_csv(f"raw_data/force/rosbag-data-{partNum}-{cond}-{act}-01_0_force.csv")
 
     return emgData, gameData, forceData
 

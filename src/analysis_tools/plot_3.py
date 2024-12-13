@@ -46,7 +46,7 @@ def handle_atrributes_under_condition(attributes_under_condition: ActivityUnderC
         plotters=[make_boxplot, make_scatter],
         title=create_title(subject_data.get_activity_id(2 * activity_index), condition),
         x_label="Muscle",
-        save_as=join("..", "test_data", "plot_3", f"activity_{subject_data.get_activity_id(2 * activity_index)}_condition_{condition}"),
+        save_as=join(".", "processed_data_plots", "plot_3", f"activity_{subject_data.get_activity_id(2 * activity_index)}_condition_{condition}"),
         save_in_formats=["png", "pdf"],
         sub_group_length=4,
         show_legend=True,

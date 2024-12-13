@@ -21,7 +21,7 @@ def make_plot_for_certain_muscle(subject_data: MurderWallDetective, condition_da
             plotters=[make_boxplot, make_boxplot],
             title=f"Muscle {muscle[:-4]} | Condition {condition_id}",
             x_label="Activity",
-            save_as=join("..", "test_data", "plot_2", f"{muscle}"),
+            save_as=join(".", "processed_data_plots", "plot_2", f"{muscle}"),
             save_in_formats=["png", "pdf"],
             sub_group_length=1,
             show_legend=False,

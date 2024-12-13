@@ -17,7 +17,7 @@ class MurderWall:
         self.experiment_parameters: ExperimentParameters = experiment_parameters
 
     def _create_condition_column(self, activity_data: TrialData) -> MurderWallAsset:
-        data_path = TrialDataPath("../proc_data", self.experiment_parameters.data_types, activity_data)
+        data_path = TrialDataPath("./processed_data", self.experiment_parameters.data_types, activity_data)
         return MurderWallAsset(data_path.get_data_frame(), data_path.get_path(), activity_data)
 
     def _create_activity_column(self, subject_id: str, activity_id: str) -> List[MurderWallAsset]:

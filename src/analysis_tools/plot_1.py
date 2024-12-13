@@ -6,6 +6,7 @@ from analysis_tools.area_under_curve_plotting_utilities import (
 )
 from gstd.working_data import WorkingData
 from analysis_tools.plotting_utilities import plot_chunk, make_boxplot
+from os.path import join
 
 
 def create_label(trial: MurderWallAsset) -> str:
@@ -41,7 +42,7 @@ def make_plot_1(subject_data: MurderWallDetective):
             plotters=[make_boxplot, make_boxplot],
             title=rename_plot_title(subject_data.get_activity_id(2 * i)),
             x_label="Muscle",
-            save_as=f"../test_data/plot_1/activity_{subject_data.get_activity_id(2 * i)}",
+            save_as=join(".", "processed_data_plots", "plot_1", f"activity_{subject_data.get_activity_id(2 * i)}"),
             save_in_formats=["png", "pdf"],
             sub_group_length=2,
             show_legend=True,

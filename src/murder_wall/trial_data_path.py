@@ -17,13 +17,8 @@ class TrialDataPath:
         self.trial_data = trial_data
 
     def _create_path(self, d_type: str) -> str:
-        return join(
-            self.path,
-            self.trial_data.subject.id,
-            self.trial_data.condition,
-            f"processed-{d_type}-{self.trial_data.activity}.csv"
-        )
-        #return f"{self.path}/{self.trial_data.subject.id}/{self.trial_data.condition}/processed-{d_type}-{self.trial_data.activity}.csv"
+        return join(self.path, self.trial_data.subject.id, self.trial_data.condition, f"processed-{d_type}-{self.trial_data.activity}.csv")
+        # return f"{self.path}/{self.trial_data.subject.id}/{self.trial_data.condition}/processed-{d_type}-{self.trial_data.activity}.csv"
 
     def _assert_existence_of_new_data(self, emg: str, force: str):
         assert (os.path.exists(emg))

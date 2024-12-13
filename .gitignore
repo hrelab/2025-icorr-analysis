@@ -6,5 +6,6 @@
 **/*.pyc
 *.egg-info
 subjects/
-
-
+raw_data
+processed_data
+processed_data_plots

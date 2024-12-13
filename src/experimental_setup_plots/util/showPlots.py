@@ -71,7 +71,6 @@ class showPlots():
                 self.fr.readFile(joined)
                 if (fileName.endswith('emg.csv')):
                     self.pl.initializeEmg(subject, cond-1, act-1, self.fr.data)
-                
                 elif (fileName.endswith('force.csv')):
                     self.pl.initializeForce(subject, cond-1, act-1, self.fr.data)
 
@@ -81,7 +80,9 @@ class showPlots():
     def makeAllSubjectFigures(self):
 
         os.chdir('subjects')
-        os.mkdir('figures')
+
+        if not os.path.exists("figures"):
+            os.mkdir('figures')
 
         dir_list = os.listdir()
         for folderName in dir_list: # Example: 03
@@ -180,7 +181,9 @@ class showPlotsProcessed():
     def makeAllSubjectFigures(self):
 
         os.chdir('subjects')
-        os.mkdir('figures')
+
+        if not os.path.exists("figures"):
+            os.mkdir('figures')
 
         folderPath = 'y'
         while folderPath != 'q':
@@ -208,7 +211,9 @@ class showPlotsProcessed():
 
         # Go inside 'figures' folder to make folder for figures of a subject
         os.chdir('figures')
-        os.mkdir(f"{folderPath}_figures")
+
+        if not os.path.exists(f"{folderPath}_figures"):
+            os.mkdir(f"{folderPath}_figures")
 
         # Back out to 'subjects' folder
         os.chdir('..')
