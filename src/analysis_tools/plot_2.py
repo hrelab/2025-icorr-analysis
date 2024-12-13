@@ -16,12 +16,12 @@ def make_plot_for_certain_muscle(subject_data: MurderWallDetective, condition_da
         pairs = list(combinations(list(merged_data.columns), 2))
         plot_chunk(
             data_frame=merged_data,
-            colors=["#984ea3"],
+            colors=["#163E64"],
             labels=[],
             plotters=[make_boxplot, make_boxplot],
             title=f"Muscle {muscle[:-4]} | Condition {condition_id}",
-            x_label="Activity",
-            save_as=join(".", "processed_data_plots", "plot_2", f"{muscle}"),
+            x_label="Goal Trajectory",
+            save_as=join(".", "processed_data_plots", "plot_2_muscle-across-activities", f"{muscle}"),
             save_in_formats=["png", "pdf"],
             sub_group_length=1,
             show_legend=False,

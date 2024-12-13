@@ -17,19 +17,19 @@ from src.preprocess.proc_data_main import process_data
 
 
 def create_needed_directories():
-    if not os.path.exists(join(".", "proc_data")):
+    if not os.path.exists(join(".", "processed_data")):
         print("Processed data not found. Follow the README to ensure the script can find the processed data.")
     if not os.path.exists(join(".", "processed_data_plots")):
         os.mkdir(join(".", "processed_data_plots"))
-    if not os.path.exists(join(".", "processed_data_plots", "plot_1")):
-        os.mkdir(join(".", "processed_data_plots", "plot_1"))
-    if not os.path.exists(join(".", "processed_data_plots", "plot_2")):
-        os.mkdir(join(".", "processed_data_plots", "plot_2"))
-    if not os.path.exists(join(".", "processed_data_plots", "plot_3")):
-        os.mkdir(join(".", "processed_data_plots", "plot_3"))
+    if not os.path.exists(join(".", "processed_data_plots", "plot_1_pose-condition")):
+        os.mkdir(join(".", "processed_data_plots", "plot_1_pose-condition"))
+    if not os.path.exists(join(".", "processed_data_plots", "plot_2_muscle-across-activities")):
+        os.mkdir(join(".", "processed_data_plots", "plot_2_muscle-across-activities"))
+    if not os.path.exists(join(".", "processed_data_plots", "plot_3_impairment")):
+        os.mkdir(join(".", "processed_data_plots", "plot_3_impairment"))
     if not os.path.exists(join(".", "subjects")):
         os.mkdir(join(".", "subjects"))
-        for subject in get_subjects(join(".", "proc_data")):
+        for subject in get_subjects(join(".", "processed_data")):
             os.mkdir(join(".", "subjects", subject))
 
 

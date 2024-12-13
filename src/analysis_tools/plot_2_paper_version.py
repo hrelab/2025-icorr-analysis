@@ -46,7 +46,7 @@ def make_plot_2(subject_data: MurderWallDetective):
         plotters=[make_boxplot, make_boxplot],
         title="Area Under Curve vs Muscle and Activity",
         x_label="Goal Trajectory",
-        save_as=join(".", "processed_data_plots", "plot_2", "plot_2_for_paper"),
+        save_as=join(".", "processed_data_plots", "plot_2_muscle-across-activities", "plot_2_for_paper"),
         save_in_formats=["png", "pdf", "svg"],
         sub_group_length=1,
         show_legend=True,
