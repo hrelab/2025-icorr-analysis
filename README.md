@@ -17,12 +17,7 @@ The code and documentation are provided as-is; however, we invite anyone who wis
 }
 ```
 
-## Important Notes
-
-1. Something marked as *CRITICAL STEP* means that the script will not run if the step is not done.
-2. Something marked as *WORK IN PROGRESS* it means that we are currently working on getting that part of the script up and running and it does not work at the current moment.
-
-## Setting Up File Structure (*CRITICAL STEP*)
+## Setting Up File Structure
 
 When you clone this repository from github your project structure will look like this:
 
@@ -80,22 +75,6 @@ Run the following commands based on the state of your project.
 
 3. Run `python -m pip install -e .` and the pyproject.toml will handle dependencies for you.
 
-## Running the whole pipeline (*WORK IN PROGRESS*)
-
-1. Make sure that you have the unprocessed data.
-
-2. Make sure to have followed the virtual environment setup from above.
-
-3. In the root of the project, run `python main.py --process_data --generate_plots --generate_exemplar`
-
-## Running the data processer on the unprocessed data (*WORK IN PROGRESS*)
-
-1. Make sure that you have the unprocessed data.
-
-2. Make sure to have followed the virtual environment setup from above.
-
-3. In the root of the project, run `python main.py --process_data`
-
 ## Generating Plots
 
 1. Make sure that you have the processed data.
@@ -106,7 +85,27 @@ Run the following commands based on the state of your project.
 
 4. The generated plots are now stored in the `processed_data_plots` directory
 
-## Generating Exemplar Plots (*WORK IN PROGRESS*)
+## Work In Progress Features
+
+These features are in current development and will not work.
+
+### Running the whole pipeline
+
+1. Make sure that you have the unprocessed data.
+
+2. Make sure to have followed the virtual environment setup from above.
+
+3. In the root of the project, run `python main.py --process_data --generate_plots --generate_exemplar`
+
+### Running the data processer on the unprocessed data
+
+1. Make sure that you have the unprocessed data.
+
+2. Make sure to have followed the virtual environment setup from above.
+
+3. In the root of the project, run `python main.py --process_data`
+
+### Generating Exemplar Plots
 
 1. Make sure that you have the processed data.
 
