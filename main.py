@@ -37,7 +37,7 @@ def main():
     create_needed_directories()
     argument_parser = ArgumentParser("Run Plot Generator | Preprocess Data | Generate Exemplar Plots")
     argument_parser.add_argument("--generate_plots", action="store_true")
-    argument_parser.add_argument("--preprocess", action="store_true")
+    argument_parser.add_argument("--process_data", action="store_true")
     argument_parser.add_argument("--generate_exemplar", action="store_true")
     argument_parser.add_argument(
         '--window',
@@ -53,7 +53,7 @@ def main():
     )
     arguments = argument_parser.parse_args()
 
-    if arguments.preprocess:
+    if arguments.process_data:
         process_data(arguments)
 
     if arguments.generate_exemplar:
