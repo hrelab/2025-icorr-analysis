@@ -37,7 +37,7 @@ To ensure that the script runs correctly, the following data needs to be downloa
 1. processed_data
 2. unprocessed_data
 
-You can download this data from the following link: [2025 ICORR Data](<https://drive.google.com/drive/u/0/folders/1n4cooQM1GK94jVku2kTv6BuAmHD2BzN7)>)
+You can download this data from the following link: [2025 ICORR Data](<https://drive.google.com/drive/u/0/folders/1n4cooQM1GK94jVku2kTv6BuAmHD2BzN7>)
 
 Both pieces of data can be moved into the 2025-icorr-analysis directory, sitting along side the main.py and src directory.
 
