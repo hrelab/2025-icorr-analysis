@@ -5,15 +5,21 @@ Creates plots using the data collected for icorr-2025
 The code and documentation are provided as-is; however, we invite anyone who wishes to adapt and use it under a Creative Commons Attribution 4.0 International License. We would appreciate it if you could cite the following publication if you use this code or data in your research:
 
 ```bibtex
-@article{author2025title,
-  title={Title of the paper},
-  author={Author, A. and Author, B.},
-  journal={Journal of Robotics},
-  volume={10},
-  number={1},
-  pages={1-10},
-  year={2025},
-  publisher={Publisher}
+@inproceedings{AnandRehabPlatform2025,
+  title={An Extensible Platform for Measurement and Modification of Muscle Engagement During Upper-Limb Robot-Facilitated Rehabilitation},
+  booktitle = {9th IEEE/RAS-EMBS International Conference on Rehabilitation Robotics ({ICORR})},
+  author = {Ajay Anand and Chad A. Berghoff and Carson J. Wynn and Evan Cole Falconer and Gabriel Parra and Jono Jenkens and 
+  Caleb J. Thomson and W. Caden Hamrick and Jacob A. George and Laura A. Hallock},
+  date = {},
+  year = {2025},
+  pages={},
+  isnn ={},
+  doi = {},
+  ourl = {},
+  urldate = {},
+  abstract = {},
+  eventtitle = {9th IEEE/RAS-EMBS International Conference on Rehabilitation Robotics ({ICORR})},
+  keywords = {rehabilitation robotics, human–robot interaction, biomechanics, surface electromyography (sEMG), user-centered design}
 }
 ```
 
