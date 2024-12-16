@@ -82,7 +82,7 @@ Once the file tree and dependencies are set up as specified above, run (from the
 python main.py --generate_plots
 ```
 
-to generate all plots and write them to the (new, unless previously generated) `processed_data_plots` directory.
+to generate all plots and write them to the (new, unless previously generated) `processed_data_plots` directory. These plots should match those included in the [data release](https://tinyurl.com/hrelab-2025-icorr).
 
 
 ## Work In Progress Features
