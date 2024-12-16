@@ -2,7 +2,7 @@
 
 ## Overview
 
-This folder contains the analysis code associated with the paper titled ***"An Extensible Platform for Measurement and Modification of Muscle Engagement During Upper-Limb Robot-Facilitated Rehabilitation"*** submitted to the 2025 IEEE International Conference on Rehabilitation Robotics (ICORR). Code can be used alongside the [released data set]([url](https://tinyurl.com/hrelab-2025-icorr)) to generate all associated publication plots and statistical analyses.
+This folder contains the analysis code associated with the paper titled ***"An Extensible Platform for Measurement and Modification of Muscle Engagement During Upper-Limb Robot-Facilitated Rehabilitation"*** submitted to the 2025 IEEE International Conference on Rehabilitation Robotics (ICORR). Code can be used alongside the [released data set](https://tinyurl.com/hrelab-2025-icorr) to generate all associated publication plots and statistical analyses.
 
 ## License
 
@@ -38,7 +38,7 @@ git clone git@github.com:hrelab/2025-icorr-analysis.git
 
 or download and extract the repository ZIP file. 
 
-Next, download the `processed_data` folder from the [released data set]([url](https://tinyurl.com/hrelab-2025-icorr)) and place it in the top-level directory. (Due to GDrive's upload limits, this may require downloading, extracting, and re-merging the folder file tree.)
+Next, download the `processed_data` folder from the [released data set](https://tinyurl.com/hrelab-2025-icorr) and place it in the top-level directory. (Due to GDrive's upload limits, this may require downloading, extracting, and re-merging the folder file tree.)
 
 This will result in the following project structure:
 
