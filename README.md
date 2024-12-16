@@ -30,10 +30,11 @@ The data, documentation and associated code is provided as-is; however, we invit
 
 ### Downloading the Code and Data
 
-To Download all modules and scripts, clone the repository via
+To Download all modules and scripts, clone and enter the repository via
 
 ```bash
 git clone git@github.com:hrelab/2025-icorr-analysis.git
+cd 2025-icorr-analysis
 ```
 
 or download and extract the repository ZIP file. 
