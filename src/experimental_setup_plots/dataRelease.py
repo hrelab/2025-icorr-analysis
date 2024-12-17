@@ -1,4 +1,5 @@
 from experimental_setup_plots.util.showPlots import showPlots
+from experimental_setup_plots.util.showPlots import showPlotsProcessed
 import matplotlib.pyplot as plt
 import os
 

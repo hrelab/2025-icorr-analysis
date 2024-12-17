@@ -38,19 +38,15 @@ class showPlots():
     def initializeData(self):
 
         # Center directory to subjects, which holds all subject folders
-        os.chdir('subjects')
-
-        dir_list = os.listdir()
+        currPath = os.path.join('.', 'subjects')
+        dir_list = os.listdir(currPath)
         for subject in dir_list: # Example: 03
             self.initializeSubject(subject)
-        
-        os.chdir('..') # Always remember to back out of directory!
-
-    
+   
     def initializeSubject(self, subject):
         # Still in 'subjects' directory, folderPath says which subject folder to use
-        folderPath = subject
-
+        folderPath = os.path.join('.', 'subjects', subject)
+        print(f"Initializing{subject}")
         dir_list = os.listdir(folderPath)
 
         # Should be 16, one folder for each activity
@@ -79,29 +75,24 @@ class showPlots():
 
     def makeAllSubjectFigures(self):
 
-        os.chdir('subjects')
+        currPath = os.path.join('.', 'subjects')
 
-        if not os.path.exists("figures"):
-            os.mkdir('figures')
+        path = os.path.join(currPath, 'figures')
+        if not os.path.exists(path):
+            os.mkdir(path) # Makes 'figures' folder within subjects folder
 
-        dir_list = os.listdir()
+        dir_list = os.listdir(currPath)
         for folderName in dir_list: # Example: 03
             if (folderName == 'figures'):
                 continue
             self.subjectFigures(folderName)
-        os.chdir('..')
 
     # Given a subject, will create figures for entire activity
     def subjectFigures(self, subject):
-        # Still in 'subjects' directory, folderPath says which subject folder to use
-        folderPath = subject
 
         # Go inside 'figures' folder to make folder for figures of a subject
-        os.chdir('figures')
-        os.mkdir(f"{folderPath}_figures")
-
-        # Back out to 'subjects' folder
-        os.chdir('..')
+        currPath = os.path.join('.', 'subjects', 'figures', f"{subject}_figures")
+        os.mkdir(currPath)
 
         subjectDems = self.demographicDict[subject]
         gender = subjectDems[0]
@@ -111,7 +102,7 @@ class showPlots():
         # Should be 2, one for each condition
         for i in range(2):
             for j in range(8):
-                self.pl.rmsAndForce(subject, gender, age, hand, i + 1, j + 1)
+                self.pl.rmsAndForce(currPath, subject, gender, age, hand, i + 1, j + 1)
 
 '''
     Utilizes plots class to generate figure(s) for subjects
@@ -151,18 +142,16 @@ class showPlotsProcessed():
     def initializeData(self):
 
         # Center directory to subjects, which holds all subject folders
-        os.chdir('proc_data')
+        currPath = os.path.join('.', 'processed_data')
 
-        dir_list = os.listdir()
+        dir_list = os.listdir(currPath)
         for subject in dir_list: # Example: 03
             self.initializeSubject(subject)
-        
-        os.chdir('..') # Always remember to back out of directory!
 
     def initializeSubject(self, subject):
         # Still in 'subjects' directory, folderPath says which subject folder to use
-        folderPath = subject
-
+        folderPath = os.path.join('.', 'processed_data', subject)
+        print(f"Initializing{subject}")
         # One folder for each condition
         for cond in ["01", "02"]:
             folderName = os.path.join(folderPath, cond)
@@ -180,10 +169,11 @@ class showPlotsProcessed():
 
     def makeAllSubjectFigures(self):
 
-        os.chdir('subjects')
+        currPath = os.path.join('.','processed_data')
 
-        if not os.path.exists("figures"):
-            os.mkdir('figures')
+        path = os.path.join(currPath, 'figures')
+        if not os.path.exists(path):
+            os.mkdir(path)
 
         folderPath = 'y'
         while folderPath != 'q':
@@ -195,7 +185,7 @@ class showPlotsProcessed():
                 break
             elif (folderPath == 'all'):
 
-                dir_list = os.listdir()
+                dir_list = os.listdir(currPath)
                 for folderName in dir_list: # Example: 03
                     if (folderName == 'figures'):
                         continue
@@ -206,17 +196,10 @@ class showPlotsProcessed():
 
     # Given a subject, will create figures for entire activity
     def subjectFigures(self, subject):
-        # Still in 'subjects' directory, folderPath says which subject folder to use
-        folderPath = subject
 
         # Go inside 'figures' folder to make folder for figures of a subject
-        os.chdir('figures')
-
-        if not os.path.exists(f"{folderPath}_figures"):
-            os.mkdir(f"{folderPath}_figures")
-
-        # Back out to 'subjects' folder
-        os.chdir('..')
+        currPath = os.path.join('.', 'processed_data', 'figures', f"{subject}_figures")
+        os.mkdir(currPath)
 
         subjectDems = self.demographicDict[subject]
         gender = subjectDems[0]
@@ -226,4 +209,4 @@ class showPlotsProcessed():
         # Should be 2, one for each condition
         for i in range(2):
             for j in range(8):
-                self.pl.rmsAndForce(subject, gender, age, hand, i + 1, j + 1)
+                self.pl.rmsAndForce(currPath, subject, gender, age, hand, i + 1, j + 1)

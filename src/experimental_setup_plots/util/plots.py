@@ -423,7 +423,7 @@ class plotGenerator():
         self.rmsPlot(subfigs[0], subject, cond, act)
         self.forcePlot(subfigs[1], subject, cond, act)
 
-    def rmsAndForce(self, subject, gender, age, hand, cond, activity):
+    def rmsAndForce(self, path, subject, gender, age, hand, cond, activity):
 
         fig0 = plt.figure(figsize= (8,11))
         # Place leftside header: subject, gender, dominant hand
@@ -434,11 +434,8 @@ class plotGenerator():
         fig0.text(.92, .95, str(cond) + '\n' + self.activityOrder[activity-1], fontsize = 8)
         self.__rmsAndForceHelper(fig0, subject, cond-1, activity-1)
 
-        os.chdir('figures')
-        os.chdir(f"{subject}_figures")
-        plt.savefig(f"{subject}_{cond}_{activity}")
-        os.chdir('..')
-        os.chdir('..')
+        savePath = os.path.join(path, f"{subject}_{cond}_{activity}")
+        plt.savefig(savePath)
 
         plt.close()
         

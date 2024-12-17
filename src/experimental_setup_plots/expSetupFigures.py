@@ -19,7 +19,6 @@ def generatePaperFigures():
     cond = 0
     activity = 1
 
-    os.chdir('subjects')
     sp.initializeSubject(subject)
     
     sp.pl.rmsOverRaw(plt.figure(), subject, cond, activity)
