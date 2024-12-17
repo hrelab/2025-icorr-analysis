@@ -46,7 +46,7 @@ class showPlots():
     def initializeSubject(self, subject):
         # Still in 'subjects' directory, folderPath says which subject folder to use
         folderPath = os.path.join('.', 'subjects', subject)
-        print(f"Initializing{subject}")
+        print(f"Initializing {subject}")
         dir_list = os.listdir(folderPath)
 
         # Should be 16, one folder for each activity
@@ -75,23 +75,21 @@ class showPlots():
 
     def makeAllSubjectFigures(self):
 
-        currPath = os.path.join('.', 'subjects')
+        subPath = os.path.join('.', 'subjects')
 
-        path = os.path.join(currPath, 'figures')
+        path = os.path.join('.', 'time_series_plots', 'unprocessed')
         if not os.path.exists(path):
-            os.mkdir(path) # Makes 'figures' folder within subjects folder
+            os.mkdir(path)
 
-        dir_list = os.listdir(currPath)
+        dir_list = os.listdir(subPath)
         for folderName in dir_list: # Example: 03
-            if (folderName == 'figures'):
-                continue
             self.subjectFigures(folderName)
 
     # Given a subject, will create figures for entire activity
     def subjectFigures(self, subject):
 
         # Go inside 'figures' folder to make folder for figures of a subject
-        currPath = os.path.join('.', 'subjects', 'figures', f"{subject}_figures")
+        currPath = os.path.join('.', 'time_series_plots', 'unprocessed', f"{subject}_figures")
         os.mkdir(currPath)
 
         subjectDems = self.demographicDict[subject]
@@ -151,7 +149,7 @@ class showPlotsProcessed():
     def initializeSubject(self, subject):
         # Still in 'subjects' directory, folderPath says which subject folder to use
         folderPath = os.path.join('.', 'processed_data', subject)
-        print(f"Initializing{subject}")
+        print(f"Initializing {subject}")
         # One folder for each condition
         for cond in ["01", "02"]:
             folderName = os.path.join(folderPath, cond)
@@ -169,9 +167,9 @@ class showPlotsProcessed():
 
     def makeAllSubjectFigures(self):
 
-        currPath = os.path.join('.','processed_data')
+        proPath = os.path.join('.','processed_data')
 
-        path = os.path.join(currPath, 'figures')
+        path = os.path.join('.', 'time_series_plots', 'processed')
         if not os.path.exists(path):
             os.mkdir(path)
 
@@ -185,7 +183,7 @@ class showPlotsProcessed():
                 break
             elif (folderPath == 'all'):
 
-                dir_list = os.listdir(currPath)
+                dir_list = os.listdir(proPath)
                 for folderName in dir_list: # Example: 03
                     if (folderName == 'figures'):
                         continue
@@ -198,7 +196,7 @@ class showPlotsProcessed():
     def subjectFigures(self, subject):
 
         # Go inside 'figures' folder to make folder for figures of a subject
-        currPath = os.path.join('.', 'processed_data', 'figures', f"{subject}_figures")
+        currPath = os.path.join('.', 'time_series_plots', 'processed', f"{subject}_figures")
         os.mkdir(currPath)
 
         subjectDems = self.demographicDict[subject]

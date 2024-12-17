@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import os
 
 def generateExemplar():
-    sp = showPlots()
+    sp = showPlotsProcessed()
 
     sp.pl.sharex = True
 

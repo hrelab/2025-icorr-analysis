@@ -31,6 +31,8 @@ def create_needed_directories():
         os.mkdir(join(".", "subjects"))
         for subject in get_subjects(join(".", "processed_data")):
             os.mkdir(join(".", "subjects", subject))
+    if not os.path.exists(join(".", "time_series_plots")):
+        os.mkdir(join(".", "time_series_plots"))
 
 
 def main():
